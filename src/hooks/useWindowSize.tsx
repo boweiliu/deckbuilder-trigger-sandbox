@@ -125,7 +125,7 @@ export function getWindowSize(isFullscreen: boolean) {
   if (isIframe()) {
     if (isLandscape) {
       return {
-        width: Math.min(windowSize.w, screenSize.w - 76), // ios safari landscape mode padding = 693 - 617 = 76
+        width: Math.min(windowSize.w, screenSize.w - 76), // ios safari landscape mode padding side padding = 693 - 617 = 76
         height: Math.min(windowSize.h, screenSize.h - 64), // ldjam site header
         isLandscape,
       };
@@ -133,7 +133,7 @@ export function getWindowSize(isFullscreen: boolean) {
     // window inner height/width doesnt work from inside iframe, so this is close -- for my ios safari, with bars expanded, 693 - 527 = 166, or 693 - 636 = 57
     return {
       width: Math.min(windowSize.w, screenSize.w),
-      height: Math.min(windowSize.h, screenSize.h - 64), // minimized mobile address bars
+      height: Math.min(windowSize.h, screenSize.h - 64), // minimized mobile top address bar
       isLandscape,
     };
   }
