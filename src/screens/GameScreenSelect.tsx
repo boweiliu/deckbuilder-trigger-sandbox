@@ -20,6 +20,10 @@ export function GameScreenSelect(props: {
   } = props;
   const [screenState, setScreenState] = useState<string>('rotationCheck');
 
+    const gameSize = {
+        width: isLandscape ? width : height,
+        height: isLandscape ? height : width,
+    };
   return (
     <>
       {screenState === 'rotationCheck' ? (
@@ -33,15 +37,14 @@ export function GameScreenSelect(props: {
             isLandscape ? undefined : styles.rotate
           )}
           style={{
-            width: isLandscape ? width : height,
-            height: isLandscape ? height : width,
+              ...gameSize,
             top: isLandscape ? 0 : height,
           }}
         >
           {screenState === 'startMenu' ? (
             <StartMenu setScreenState={setScreenState} />
           ) : null}
-          {screenState === 'play' ? <PlayScreen /> : null}
+          {screenState === 'play' ? <PlayScreen {...gameSize} /> : null}
           {screenState === 'pauseMenu' ? <PauseMenu /> : null}
         </div>
       ) : null}
