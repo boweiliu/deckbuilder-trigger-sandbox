@@ -1,3 +1,10 @@
+/**
+ * Checks the window.orientation (or equivalent) to see if
+ *  the user's physical device has been rotated, and if so which way.
+ *
+ * Needed because this is frequently the only value
+ * that changes when a phone user rotates their phone (if running inside iframe).
+ */
 function isOrientationRotated() {
   let isRotated: boolean;
   const screenOrientation = window.screen?.orientation;
@@ -24,6 +31,9 @@ function isOrientationRotated() {
   return isRotated;
 }
 
+/**
+ * @returns true if it looks like we are in an iframe, false otherwise
+ */
 function isIframe(): boolean {
   // we're definitely inside a sandboxed iframe
   if (window.origin === null || window.origin === 'null') {
@@ -33,15 +43,31 @@ function isIframe(): boolean {
   return false;
 }
 
-function getIsLandscape(): boolean {
+/**
+ * Figures out whether the user's physical device is a landscape
+ * or portrait, when it is in its default non-rotated orientation.
+ *
+ * In other words, this will always return the same 
+ * value, no matter if the user resizes their window, or is in a different
+ * iframe, or physically rotates their device in the real world.
+ */
+function getPhysicalDeviceShape(): 'landscape' | 'portrait' {
   const height = window.screen?.height;
   const width = window.screen?.width;
-  let isLandscape: boolean;
+  let result: 'landscape' | 'portrait';
   if (height && width && height < width) {
-    isLandscape = true;
+    result = 'landscape';
   } else {
-    isLandscape = false;
+    result = 'portrait';
   }
+  return result;
+}
+
+/**
+ * @returns true if the user's physical device is now being viewed as a landscape orientation.
+ */
+function getIsLandscape(): boolean {
+  let isLandscape = getPhysicalDeviceShape() === 'landscape';
 
   if (isOrientationRotated()) {
     return !isLandscape;
