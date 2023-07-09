@@ -24,12 +24,12 @@
 .singleInfoArea {
   border: solid 2px #999999;
   border-radius: 12px;
-  background-color: #444444;
+  background-color: #4a4a4a;
   text-align: center;
 }
 
 .rowsWrapper {
-  background-color: black;
+  background-color: #222;
   margin-right: 16px;
   flex-grow: 1;
   text-align: center;
