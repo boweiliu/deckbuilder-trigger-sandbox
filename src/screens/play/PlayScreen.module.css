@@ -1,17 +1,36 @@
 .grayBorder {
   position: relative;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: solid 0px #888888;
 }
 
-.playScreenContainer {
+.withPadding {
   position: relative;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  padding: 16px;
+}
+
+.playScreenContainer {
+  position: relative;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.singleInfoArea {
+  border: solid 2px #999999;
+  border-radius: 12px;
+  background-color: #444444;
+  text-align: center;
+}
+
+.rowsWrapper {
+  background-color: black;
+  margin-right: 16px;
+  flex-grow: 1;
+  text-align: center;
 }
