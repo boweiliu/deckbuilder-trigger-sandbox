@@ -39,6 +39,12 @@ export const withAutoWidth = (ChildComponent) => {
     return (props) => (<AutoWidth {...props} ChildComponent={ChildComponent} />);
 }
 
+export const withAutoWidthSize = <PT,>(SizedChildComponent: (p: PT) => [Sizes, JSX.Element]): (p: PT) => [Sizes, JSX.Element] => {
+    return (props) => (
+        <AutoWidth {...props} ChildComponent={ChildComponent} />
+    );
+}
+
 
 // Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
 export const PlayScreen = withGrayBorder(withPadding(16)(MyPlayScreen));
@@ -79,13 +85,26 @@ const MyRowsWrapper = (props: { width, height }) => {
     return (<div className={styles.rowsWrapper} style={{width, height}}>width {width} height {height}</div>);
 }
 
-
-
-const BigCard = withPadding(12)(withAutoWidth(MyBigCard))
+const BigCard = withPadding(12)(withAutoWidth(unSizer(defaultSizer(MyBigCard))))
 
 function MyBigCard(props: { width, height }) {
   const { width, height } = props;
   return <div className={styles.singleInfoArea} style={{width, height}}>height {height} width {width}</div>
+}
+
+type Sizes = { width: number, height: number  }
+
+function defaultSizer<T extends Sizes>(Component: (props: T) => JSX.Element) {
+    return (props: T) => {
+        return [{ width: props.width, height: props.height }, <Component {...props} />]
+    }
+}
+
+function unSizer<T extends Sizes>(SizedComponent: (props: T) => [ Sizes, JSX.Element ]) {
+    return (props: T) => {
+        const [ , el ] = SizedComponent(props);
+        return el;
+    }
 }
 
 function PlayHud() {
