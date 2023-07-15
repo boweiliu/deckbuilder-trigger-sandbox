@@ -1,6 +1,7 @@
 import { PlayViewport } from '@/screens/play/PlayViewport';
 import { PlayBoard } from '@/screens/play/PlayBoard';
 import styles from './PlayScreen.module.css';
+import { FC } from 'react';
 
 export type Sizes = { width: number; height: number };
 export type FCS<T extends Sizes> = FC<T>;
@@ -15,11 +16,9 @@ export type HOC2Sized = <T extends Sizes>(
 ) => FCSized<T>;
 
 export function GrayBorder(props: {
-  width;
-  height;
   ChildComponent;
   borderWidth;
-}) {
+} & Sizes) {
   const { width, height, ChildComponent, borderWidth = 6 } = props;
 
   return (
@@ -36,13 +35,13 @@ export function GrayBorder(props: {
   );
 }
 
-export const withGrayBorder = (ChildComponent) => {
+export const withGrayBorder = (ChildComponent: FC) => {
   return function grayBorder(props) {
     return <GrayBorder {...props} ChildComponent={ChildComponent} />;
   };
 };
 
-export function Padding(props: { width; height; ChildComponent; padding }) {
+export function Padding(props: { ChildComponent: FC; padding: number } & Sizes) {
   const { width, height, ChildComponent, padding } = props;
 
   return (
