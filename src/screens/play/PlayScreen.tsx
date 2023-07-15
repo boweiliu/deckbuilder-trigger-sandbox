@@ -119,7 +119,7 @@ export const withAutoWidthSized = <T extends Sizes & { aspectRatio?: number }>(
   };
 };
 
-function MyRowsWrapper(props: Sizes) {
+function RowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.rowsWrapper} style={{ width, height }}>
@@ -177,10 +177,7 @@ const BigCard = withPaddingSized(12)(
 );
 
 const RowsWrapperAndBigCard = unSizer(
-  withFlexLeftSized({ paddingBetween: 16 })(
-    defaultSizer(MyRowsWrapper),
-    BigCard
-  )
+  withFlexLeftSized({ paddingBetween: 16 })(defaultSizer(RowsWrapper), BigCard)
 );
 
 function MyBigCard(props: Sizes) {
