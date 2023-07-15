@@ -2,6 +2,14 @@ import { PlayViewport } from '@/screens/play/PlayViewport';
 import { PlayBoard } from '@/screens/play/PlayBoard';
 import styles from './PlayScreen.module.css';
 
+
+export type Sizes = { width: number, height: number  }
+export type FCS<T extends Sizes> = FC<T>;
+export type Sized<C> = [Sizes, C];
+export type FCSized<T extends Sizes> = (...args: Parameters<FCS<T>>) => Sized<ReturnType<FCS<T>>>;
+export type HOCSized = <T extends Sizes,>(c: FCSized<T>) => FCSized<T>;
+
+
 export const GrayBorder = (props: { width, height, ChildComponent, borderWidth }) => {
     const { width, height, ChildComponent, borderWidth = 6 } = props;
 
@@ -28,8 +36,29 @@ export const withPadding = (padding) => {
     })
 }
 
+export const withPaddingSized: ((p: number) => HOCSized) = (padding) => {
+    return <T extends Sizes,>(SizedChildComponent: FCSized<T>) => {
+        return (props: T) => {
+            const { width: availableWidth, height: availableHeight } = props;
+
+            const childAvailableSizes = { height: availableHeight - 2 * padding, width: availableWidth - 2 * padding };
+
+            const [ childRenderedSizes, children ] = SizedChildComponent({...props, ...childAvailableSizes});
+
+            const { width: renderedWidth, height: renderedHeight } = childRenderedSizes;
+
+            return [ {width: renderedWidth + 2 * padding, height: renderedHeight + 2 * padding}, (
+                <div className={styles.withPadding} style={{ padding: padding + 'px' }}>
+                    {children}
+                </div>
+            ) ];
+        };
+    };
+};
+
+
 // aspectRatio = width / height
-export const withAutoWidthSized = <PT,>(SizedChildComponent: (p: PT) => [Sizes, JSX.Element]): (p: PT) => [Sizes, JSX.Element] => {
+export const withAutoWidthSized = <T extends Sizes,>(SizedChildComponent: FCSized<T>): FCSized<T> => {
     return (props) => {
         // grab the available sizes, as passed down from our wrapper
         const { width: availableWidth, height: availableHeight, aspectRatio = 4./7 } = props;
@@ -84,22 +113,21 @@ const MyRowsWrapper = (props: { width, height }) => {
     return (<div className={styles.rowsWrapper} style={{width, height}}>width {width} height {height}</div>);
 }
 
-const BigCard = withPadding(12)(unSizer(withAutoWidthSized(defaultSizer(MyBigCard))))
+const BigCard = unSizer(withPaddingSized(12)(withAutoWidthSized(defaultSizer(MyBigCard))))
+// const BigCard = withPadding(12)(unSizer(withAutoWidthSized(defaultSizer(MyBigCard))))
 
 function MyBigCard(props: { width, height }) {
   const { width, height } = props;
   return <div className={styles.singleInfoArea} style={{width, height}}>height {height} width {width}</div>
 }
 
-type Sizes = { width: number, height: number  }
-
-function defaultSizer<T extends Sizes>(Component: (props: T) => JSX.Element): (t: T) => [Sizes, JSX.Element] {
+function defaultSizer<T extends Sizes>(Component: FCS<T>): FCSized<T> {
     return (props: T) => {
         return [{ width: props.width, height: props.height }, (<Component {...props} />)]
     }
 }
 
-function unSizer<T extends Sizes>(SizedComponent: (props: T) => [ Sizes, JSX.Element ]): (t: T) => JSX.Element {
+function unSizer<T extends Sizes>(SizedComponent: FCSized<T>): FCS<T>{
     return (props: T) => {
         const [ , el ] = SizedComponent(props);
         return el;
