@@ -183,7 +183,7 @@ function MyBigCard(props: Sizes) {
   );
 }
 
-function defaultSizer<T extends Sizes>(Component: FCS<T>): FCSized<T> {
+export function defaultSizer<T extends Sizes>(Component: FCS<T>): FCSized<T> {
   return (props: T) => {
     return [
       { width: props.width, height: props.height },
@@ -193,15 +193,11 @@ function defaultSizer<T extends Sizes>(Component: FCS<T>): FCSized<T> {
   };
 }
 
-function unSizer<T extends Sizes>(SizedComponent: FCSized<T>): FCS<T> {
+export function unSizer<T extends Sizes>(SizedComponent: FCSized<T>): FCS<T> {
   return (props: T) => {
     const [, el] = SizedComponent(props);
     return el;
   };
-}
-
-function PlayHud() {
-  return null;
 }
 
 // Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
@@ -213,8 +209,6 @@ export function MyPlayScreen(props: { width: number; height: number }) {
   const { width, height } = props;
   return (
     <div className={styles.playScreenContainer}>
-      {/* <div className={styles.rowsWrapper} style={{height}}>width {width} height {height}</div>
-        <BigCard width={width} height={height} /> */}
       <RowsWrapperAndBigCard width={width} height={height} />
     </div>
   );
