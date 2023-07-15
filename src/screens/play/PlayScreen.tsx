@@ -37,7 +37,7 @@ export function GrayBorder(props: {
 }
 
 export const withGrayBorder = (ChildComponent) => {
-  return function (props) {
+  return function grayBorder(props) {
     return <GrayBorder {...props} ChildComponent={ChildComponent} />;
   };
 };
@@ -58,7 +58,7 @@ export function Padding(props: { width; height; ChildComponent; padding }) {
 
 export const withPadding = (padding) => {
   return (ChildComponent) => {
-    return function (props) {
+    return function pad(props) {
       return (
         <Padding {...props} padding={padding} ChildComponent={ChildComponent} />
       );
@@ -90,6 +90,7 @@ export const withPaddingSized: (p: number) => HOCSized = (padding) => {
       };
       return [
         mySizes,
+        // eslint-disable-next-line react/jsx-key
         <div
           className={styles.withPadding}
           style={{
@@ -132,20 +133,6 @@ export const withAutoWidthSized = <T extends Sizes>(
     return [childRenderedSizes, children];
   };
 };
-
-// Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
-export const PlayScreen = withGrayBorder(withPadding(16)(MyPlayScreen));
-
-export function MyPlayScreen(props: { width: number; height: number }) {
-  const { width, height } = props;
-  return (
-    <div className={styles.playScreenContainer}>
-      {/* <div className={styles.rowsWrapper} style={{height}}>width {width} height {height}</div>
-        <BigCard width={width} height={height} /> */}
-      <RowsWrapperAndBigCard width={width} height={height} />
-    </div>
-  );
-}
 
 function MyRowsWrapper(props: { width; height }) {
   const { width, height } = props;
@@ -225,6 +212,7 @@ function defaultSizer<T extends Sizes>(Component: FCS<T>): FCSized<T> {
   return (props: T) => {
     return [
       { width: props.width, height: props.height },
+      // eslint-disable-next-line react/jsx-key
       <Component {...props} />,
     ];
   };
@@ -239,4 +227,18 @@ function unSizer<T extends Sizes>(SizedComponent: FCSized<T>): FCS<T> {
 
 function PlayHud() {
   return null;
+}
+
+// Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
+export const PlayScreen = withGrayBorder(withPadding(16)(MyPlayScreen));
+
+export function MyPlayScreen(props: { width: number; height: number }) {
+  const { width, height } = props;
+  return (
+    <div className={styles.playScreenContainer}>
+      {/* <div className={styles.rowsWrapper} style={{height}}>width {width} height {height}</div>
+        <BigCard width={width} height={height} /> */}
+      <RowsWrapperAndBigCard width={width} height={height} />
+    </div>
+  );
 }
