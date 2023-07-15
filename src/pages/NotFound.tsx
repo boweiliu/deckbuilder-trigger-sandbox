@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom';
 
 function NotFound() {
-
   // compute the route to index page. needs to work even if we are deployed to gh pages under a subdirectory
   const origin = window.location.origin || 'http://localhost:5173';
   const href = window.location.href || `${origin}/index.html`;
   const url = new URL(href);
   url.hash = '';
   const hrefMinusHash = url.href;
-
 
   return (
     <>

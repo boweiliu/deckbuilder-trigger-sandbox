@@ -47,7 +47,7 @@ function isIframe(): boolean {
  * Figures out whether the user's physical device is a landscape
  * or portrait, when it is in its default non-rotated orientation.
  *
- * In other words, this will always return the same 
+ * In other words, this will always return the same
  * value, no matter if the user resizes their window, or is in a different
  * iframe, or physically rotates their device in the real world.
  */
@@ -67,7 +67,7 @@ function getPhysicalDeviceShape(): 'landscape' | 'portrait' {
  * @returns true if the user's physical device is now being viewed as a landscape orientation.
  */
 function getIsLandscape(): boolean {
-  let isLandscape = getPhysicalDeviceShape() === 'landscape';
+  const isLandscape = getPhysicalDeviceShape() === 'landscape';
 
   if (isOrientationRotated()) {
     return !isLandscape;

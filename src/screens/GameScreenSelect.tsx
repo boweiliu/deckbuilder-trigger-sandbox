@@ -7,7 +7,6 @@ import { PauseMenu } from '@/screens/PauseMenu';
 import styles from './GameScreenSelect.module.css';
 import { FullscreenContext } from '@/hooks/useFullscreen';
 
-
 const defaultScreenStateAfterRotationCheck = 'play';
 
 export function GameScreenSelect(props: {
@@ -20,14 +19,17 @@ export function GameScreenSelect(props: {
   } = props;
   const [screenState, setScreenState] = useState<string>('rotationCheck');
 
-    const gameSize = {
-        width: isLandscape ? width : height,
-        height: isLandscape ? height : width,
-    };
+  const gameSize = {
+    width: isLandscape ? width : height,
+    height: isLandscape ? height : width,
+  };
   return (
     <>
       {screenState === 'rotationCheck' ? (
-        <RotationCheck {...props} onStart={() => setScreenState(defaultScreenStateAfterRotationCheck)} />
+        <RotationCheck
+          {...props}
+          onStart={() => setScreenState(defaultScreenStateAfterRotationCheck)}
+        />
       ) : null}
 
       {screenState !== 'rotationCheck' ? (
@@ -37,7 +39,7 @@ export function GameScreenSelect(props: {
             isLandscape ? undefined : styles.rotate
           )}
           style={{
-              ...gameSize,
+            ...gameSize,
             top: isLandscape ? 0 : height,
           }}
         >
