@@ -39,10 +39,19 @@ export const withAutoWidth = (ChildComponent) => {
     return (props) => (<AutoWidth {...props} ChildComponent={ChildComponent} />);
 }
 
-export const withAutoWidthSize = <PT,>(SizedChildComponent: (p: PT) => [Sizes, JSX.Element]): (p: PT) => [Sizes, JSX.Element] => {
-    return (props) => (
-        <AutoWidth {...props} ChildComponent={ChildComponent} />
-    );
+export const withAutoWidthSized = <PT,>(SizedChildComponent: (p: PT) => [Sizes, JSX.Element]): (p: PT) => [Sizes, JSX.Element] => {
+    return (props) => {
+        // grab the available sizes, as passed down from our wrapper
+        const { width: availableWidth, height: availableHeight, aspectRatio = 4./7 } = props;
+
+        // compute the sizes available to the child
+        const childAvailableSizes = { height: availableHeight, width: availableHeight * aspectRatio };
+
+        // invoke the child
+        const [ childRenderedSizes, children ] = SizedChildComponent({...props, ...childAvailableSizes});
+
+        return [ childRenderedSizes, children ];
+    };
 }
 
 
@@ -85,7 +94,8 @@ const MyRowsWrapper = (props: { width, height }) => {
     return (<div className={styles.rowsWrapper} style={{width, height}}>width {width} height {height}</div>);
 }
 
-const BigCard = withPadding(12)(withAutoWidth(unSizer(defaultSizer(MyBigCard))))
+// const BigCard = withPadding(12)(withAutoWidth(unSizer(defaultSizer(MyBigCard))))
+const BigCard = withPadding(12)(unSizer(withAutoWidthSized(defaultSizer(MyBigCard))))
 
 function MyBigCard(props: { width, height }) {
   const { width, height } = props;
@@ -94,13 +104,13 @@ function MyBigCard(props: { width, height }) {
 
 type Sizes = { width: number, height: number  }
 
-function defaultSizer<T extends Sizes>(Component: (props: T) => JSX.Element) {
+function defaultSizer<T extends Sizes>(Component: (props: T) => JSX.Element): (t: T) => [Sizes, JSX.Element] {
     return (props: T) => {
-        return [{ width: props.width, height: props.height }, <Component {...props} />]
+        return [{ width: props.width, height: props.height }, (<Component {...props} />)]
     }
 }
 
-function unSizer<T extends Sizes>(SizedComponent: (props: T) => [ Sizes, JSX.Element ]) {
+function unSizer<T extends Sizes>(SizedComponent: (props: T) => [ Sizes, JSX.Element ]): (t: T) => JSX.Element {
     return (props: T) => {
         const [ , el ] = SizedComponent(props);
         return el;
