@@ -21,6 +21,10 @@
   display: flex;
 }
 
+.playScreenContaner > * {
+      display: inline-block;
+}
+
 .singleInfoArea {
   border: solid 2px #999999;
   border-radius: 12px;
@@ -30,7 +34,5 @@
 
 .rowsWrapper {
   background-color: #222;
-  margin-right: 16px;
-  flex-grow: 1;
   text-align: center;
 }

@@ -8,6 +8,7 @@ export type FCS<T extends Sizes> = FC<T>;
 export type Sized<C> = [Sizes, C];
 export type FCSized<T extends Sizes> = (...args: Parameters<FCS<T>>) => Sized<ReturnType<FCS<T>>>;
 export type HOCSized = <T extends Sizes,>(c: FCSized<T>) => FCSized<T>;
+export type HOC2Sized = <T extends Sizes,>(c: FCSized<T>, d: FCSized<T>) => FCSized<T>;
 
 
 export const GrayBorder = (props: { width, height, ChildComponent, borderWidth }) => {
@@ -47,8 +48,9 @@ export const withPaddingSized: ((p: number) => HOCSized) = (padding) => {
 
             const { width: renderedWidth, height: renderedHeight } = childRenderedSizes;
 
-            return [ {width: renderedWidth + 2 * padding, height: renderedHeight + 2 * padding}, (
-                <div className={styles.withPadding} style={{ padding: padding + 'px' }}>
+            const mySizes = { width: renderedWidth + 2 * padding, height: renderedHeight + 2 * padding };
+            return [ mySizes, (
+                <div className={styles.withPadding} style={{ padding: padding + 'px', width: mySizes.width, height: mySizes.height }}>
                     {children}
                 </div>
             ) ];
@@ -81,40 +83,49 @@ export function MyPlayScreen(props: { width: number, height: number }) {
   const { width, height } = props;
   return (
     <div className={styles.playScreenContainer} >
-        <div className={styles.rowsWrapper} style={{height}}>width {width} height {height}</div>
-        <BigCard width={width} height={height} />
+      {/*<div className={styles.rowsWrapper} style={{height}}>width {width} height {height}</div>
+        <BigCard width={width} height={height} /> */}
+        <RowsWrapperAndBigCard width={width} height={height}/>
     </div>
   );
 }
 
-// const { rendered: renderedBigCard, width, height } = useMeasureRender(BigCard, { height });
-// ...
-// return (<> {renderedBigCard} </>)
-
-// const RowsWrapperAndBigCard = withLeftRight({ padding: 16 })(MyRowsWrapper, BigCard);
-
-// export const withLeftRight = (args: { padding: number  }) => {
-//     const { padding  } = args;
-//     return (Child1, Child2) => {
-//         return (props: { width, height }) => {
-//             const { width, height } = props;
-//             return (<>
-//                 <Child1 {...props} height={height} width={}/>
-//                 <div width={padding} height={height} />
-//                 <Child2 {...props} />
-//                 </>);
-// 
-//         }
-//     }
-// }
-
 const MyRowsWrapper = (props: { width, height }) => {
   const { width, height } = props;
-    return (<div className={styles.rowsWrapper} style={{width, height}}>width {width} height {height}</div>);
+  return (<div className={styles.rowsWrapper} style={{width, height}}>width {width} height {height}</div>);
 }
 
-const BigCard = unSizer(withPaddingSized(12)(withAutoWidthSized(defaultSizer(MyBigCard))))
+export const withFlexLeftSized: ((args: { paddingBetween: number }) => HOC2Sized) = (args) => {
+    const { paddingBetween } = args;
+    return <T extends Sizes,>(LeftComponent: FCSized<T>, RightComponent: FCSized<T>): FCSized<T> => {
+        return (props: T) => {
+            const { width: availableWidth, height: availableHeight } = props;
+
+            const [ rightRenderedSizes, rightChildren ] = RightComponent({...props});
+
+            const leftAvailableSizes = { width: availableWidth - rightRenderedSizes.width - paddingBetween, height: availableHeight };
+            console.log({props, leftAvailableSizes, rightRenderedSizes});
+
+            const [ leftRenderedSizes, leftChildren ] = LeftComponent({...props, ...leftAvailableSizes});
+
+            const myRenderedSizes = { width: leftRenderedSizes.width + paddingBetween + rightRenderedSizes.width,
+                height: Math.max(leftRenderedSizes.height, rightRenderedSizes.height) };
+
+            return [ myRenderedSizes, (
+                <>
+                    {leftChildren}
+                    <div style={{width: paddingBetween, height: myRenderedSizes.height}} />
+                    {rightChildren}
+                </>
+            ) ];
+        };
+    };
+};
+
+const BigCard = (withPaddingSized(12)(withAutoWidthSized(defaultSizer(MyBigCard))))
 // const BigCard = withPadding(12)(unSizer(withAutoWidthSized(defaultSizer(MyBigCard))))
+
+const RowsWrapperAndBigCard = unSizer(withFlexLeftSized({ paddingBetween: 16 })(defaultSizer(MyRowsWrapper), (BigCard)));
 
 function MyBigCard(props: { width, height }) {
   const { width, height } = props;
