@@ -29,16 +29,6 @@ export const withPadding = (padding) => {
 }
 
 // aspectRatio = width / height
-export const AutoWidth = (props: {width, height, ChildComponent, aspectRatio }) => {
-    const { width, height, ChildComponent, aspectRatio = 4./7 } = props;
-
-    return (<ChildComponent {...props} height={height} width={height * aspectRatio} />)
-}
-
-export const withAutoWidth = (ChildComponent) => {
-    return (props) => (<AutoWidth {...props} ChildComponent={ChildComponent} />);
-}
-
 export const withAutoWidthSized = <PT,>(SizedChildComponent: (p: PT) => [Sizes, JSX.Element]): (p: PT) => [Sizes, JSX.Element] => {
     return (props) => {
         // grab the available sizes, as passed down from our wrapper
@@ -94,7 +84,6 @@ const MyRowsWrapper = (props: { width, height }) => {
     return (<div className={styles.rowsWrapper} style={{width, height}}>width {width} height {height}</div>);
 }
 
-// const BigCard = withPadding(12)(withAutoWidth(unSizer(defaultSizer(MyBigCard))))
 const BigCard = withPadding(12)(unSizer(withAutoWidthSized(defaultSizer(MyBigCard))))
 
 function MyBigCard(props: { width, height }) {
