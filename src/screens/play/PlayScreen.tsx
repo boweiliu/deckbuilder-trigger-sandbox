@@ -192,7 +192,6 @@ export const withFlexLeftSized: (args: {
 const BigCard = withPaddingSized(12)(
   withAutoWidthSized(defaultSizer(MyBigCard))
 );
-// const BigCard = withPadding(12)(unSizer(withAutoWidthSized(defaultSizer(MyBigCard))))
 
 const RowsWrapperAndBigCard = unSizer(
   withFlexLeftSized({ paddingBetween: 16 })(
@@ -232,7 +231,7 @@ function PlayHud() {
 }
 
 // Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
-export const PlayScreen = withGrayBorder(withPadding(16)(MyPlayScreen));
+export const PlayScreen = withGrayBorder(unSizer(withPaddingSized(16)(defaultSizer(MyPlayScreen))));
 
 export function MyPlayScreen(props: { width: number; height: number }) {
   const { width, height } = props;
