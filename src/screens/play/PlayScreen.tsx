@@ -42,32 +42,6 @@ export const withGrayBorder = <T extends Sizes>(
   };
 };
 
-export function Padding(
-  props: { ChildComponent: FC; padding: number } & Sizes
-) {
-  const { width, height, ChildComponent, padding } = props;
-
-  return (
-    <div className={styles.withPadding} style={{ padding }}>
-      <ChildComponent
-        {...props}
-        width={width - 2 * padding}
-        height={height - 2 * padding}
-      />
-    </div>
-  );
-}
-
-export const withPadding = (padding: number) => {
-  return <T extends Sizes,>(ChildComponent: FC<T>): FC<T> => {
-    return function pad(props: T) {
-      return (
-        <Padding {...props} padding={padding} ChildComponent={ChildComponent} />
-      );
-    };
-  };
-};
-
 export const withPaddingSized: (p: number) => HOCSized = (padding) => {
   return <T extends Sizes>(SizedChildComponent: FCSized<T>) => {
     return (props: T) => {
@@ -109,7 +83,7 @@ export const withPaddingSized: (p: number) => HOCSized = (padding) => {
 };
 
 // aspectRatio = width / height
-export const withAutoWidthSized = <T extends Sizes & {aspectRatio?: number}>(
+export const withAutoWidthSized = <T extends Sizes & { aspectRatio?: number }>(
   SizedChildComponent: FCSized<T>
 ): FCSized<T> => {
   return (props) => {
@@ -231,7 +205,9 @@ function PlayHud() {
 }
 
 // Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
-export const PlayScreen = withGrayBorder(unSizer(withPaddingSized(16)(defaultSizer(MyPlayScreen))));
+export const PlayScreen = withGrayBorder(
+  unSizer(withPaddingSized(16)(defaultSizer(MyPlayScreen)))
+);
 
 export function MyPlayScreen(props: { width: number; height: number }) {
   const { width, height } = props;
