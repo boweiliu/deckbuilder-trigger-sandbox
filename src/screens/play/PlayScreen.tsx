@@ -34,11 +34,20 @@ export function GrayBorder<T extends Sizes>(
   );
 }
 
-export const withGrayBorder = <T extends Sizes>(
+export const withGrayBorder = <T extends Sizes & { borderWidth?: number }>(
   ChildComponent: FC<T>
 ): FC<T> => {
   return function grayBorder(props: T) {
-    return <GrayBorder {...props} ChildComponent={ChildComponent} />;
+    const { width, height, borderWidth = 6 } = props;
+    return (
+      <div className={styles.grayBorder} style={{ borderWidth, width, height }}>
+        <ChildComponent
+          {...props}
+          width={width - 2 * borderWidth}
+          height={height - 2 * borderWidth}
+        />
+      </div>
+    );
   };
 };
 
