@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "prepare": "husky install",
+    "lint": "eslint '**/*.{ts,tsx,js,jsx}' --fix && prettier --write '**/*.{ts,tsx,js,jsx,css,md}' && tsc",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
