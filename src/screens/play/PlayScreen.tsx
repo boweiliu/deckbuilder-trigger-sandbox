@@ -19,7 +19,7 @@ export function GrayBorder<T extends Sizes>(
   props: {
     ChildComponent: FC<T>;
     borderWidth?: number;
-  } & Sizes
+  } & T
 ) {
   const { width, height, ChildComponent, borderWidth = 6 } = props;
 
@@ -58,9 +58,9 @@ export function Padding(
   );
 }
 
-export const withPadding = (padding) => {
-  return (ChildComponent) => {
-    return function pad(props) {
+export const withPadding = (padding: number) => {
+  return <T extends Sizes,>(ChildComponent: FC<T>): FC<T> => {
+    return function pad(props: T) {
       return (
         <Padding {...props} padding={padding} ChildComponent={ChildComponent} />
       );
@@ -109,7 +109,7 @@ export const withPaddingSized: (p: number) => HOCSized = (padding) => {
 };
 
 // aspectRatio = width / height
-export const withAutoWidthSized = <T extends Sizes>(
+export const withAutoWidthSized = <T extends Sizes & {aspectRatio?: number}>(
   SizedChildComponent: FCSized<T>
 ): FCSized<T> => {
   return (props) => {
@@ -136,7 +136,7 @@ export const withAutoWidthSized = <T extends Sizes>(
   };
 };
 
-function MyRowsWrapper(props: { width; height }) {
+function MyRowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.rowsWrapper} style={{ width, height }}>
@@ -201,7 +201,7 @@ const RowsWrapperAndBigCard = unSizer(
   )
 );
 
-function MyBigCard(props: { width; height }) {
+function MyBigCard(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.singleInfoArea} style={{ width, height }}>
