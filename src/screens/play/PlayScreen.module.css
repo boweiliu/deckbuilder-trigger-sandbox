@@ -21,10 +21,6 @@
   display: flex;
 }
 
-.playScreenContaner > * {
-      display: inline-block;
-}
-
 .singleInfoArea {
   border: solid 2px #999999;
   border-radius: 12px;
