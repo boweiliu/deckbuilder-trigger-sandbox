@@ -1,7 +1,7 @@
+import { FC } from 'react';
 import { PlayViewport } from '@/screens/play/PlayViewport';
 import { PlayBoard } from '@/screens/play/PlayBoard';
 import styles from './PlayScreen.module.css';
-import { FC } from 'react';
 
 export type Sizes = { width: number; height: number };
 export type FCS<T extends Sizes> = FC<T>;
@@ -15,17 +15,16 @@ export type HOC2Sized = <T extends Sizes>(
   d: FCSized<T>
 ) => FCSized<T>;
 
-export function GrayBorder(props: {
-  ChildComponent;
-  borderWidth;
-} & Sizes) {
+export function GrayBorder<T extends Sizes>(
+  props: {
+    ChildComponent: FC<T>;
+    borderWidth?: number;
+  } & Sizes
+) {
   const { width, height, ChildComponent, borderWidth = 6 } = props;
 
   return (
-    <div
-      className={styles.grayBorder}
-      style={{ borderWidth: `${borderWidth}px` }}
-    >
+    <div className={styles.grayBorder} style={{ borderWidth }}>
       <ChildComponent
         {...props}
         width={width - 2 * borderWidth}
@@ -35,17 +34,21 @@ export function GrayBorder(props: {
   );
 }
 
-export const withGrayBorder = (ChildComponent: FC) => {
-  return function grayBorder(props) {
+export const withGrayBorder = <T extends Sizes>(
+  ChildComponent: FC<T>
+): FC<T> => {
+  return function grayBorder(props: T) {
     return <GrayBorder {...props} ChildComponent={ChildComponent} />;
   };
 };
 
-export function Padding(props: { ChildComponent: FC; padding: number } & Sizes) {
+export function Padding(
+  props: { ChildComponent: FC; padding: number } & Sizes
+) {
   const { width, height, ChildComponent, padding } = props;
 
   return (
-    <div className={styles.withPadding} style={{ padding: `${padding}px` }}>
+    <div className={styles.withPadding} style={{ padding }}>
       <ChildComponent
         {...props}
         width={width - 2 * padding}
@@ -93,7 +96,7 @@ export const withPaddingSized: (p: number) => HOCSized = (padding) => {
         <div
           className={styles.withPadding}
           style={{
-            padding: `${padding}px`,
+            padding,
             width: mySizes.width,
             height: mySizes.height,
           }}
