@@ -36,13 +36,13 @@ const SmallCard = unSizer(
   withPaddingSized(6)(withAutoWidthSized(defaultSizer(MySmallCard)))
 );
 
-function Row(props: Sizes & { count?: number }) {
-  const { width, height, count = 5 } = props;
+function Row(props: Sizes & { count?: number; title?: string }) {
+  const { width, height, count = 5, title = 'Shop' } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   // -4px on height to account for border. also make sure to hide horiz scrollbar
   return (
     <div className={styles.row} style={{ borderRadius, width, height }}>
-      <div className={styles.rowFloatingTitle}>Shop</div>
+      <div className={styles.rowFloatingTitle}>{title}</div>
       <div
         className={styles.rowContents}
         style={{ width: width - 4, height: height - 4 }}
@@ -61,9 +61,9 @@ function RowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.rowsWrapper} style={{ width, height }}>
-      <RowWrapper width={width} height={height / 3} count={5} />
-      <RowWrapper width={width} height={height / 3} count={1} />
-      <RowWrapper width={width} height={height / 3} count={10} />
+      <RowWrapper width={width} height={height / 3} count={5} title="Shop" />
+      <RowWrapper width={width} height={height / 3} count={1} title="Perms" />
+      <RowWrapper width={width} height={height / 3} count={10} title="Hand" />
     </div>
   );
 }
