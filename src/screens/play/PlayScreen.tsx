@@ -23,7 +23,12 @@ function MySmallCard(props: Sizes) {
   const { width, height } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
-    <div className={styles.smallCard} style={{ width, height, borderRadius }} />
+    <div
+      className={styles.smallCard}
+      style={{ width, height, borderRadius, fontSize: height / 11 }}
+    >
+      filler
+    </div>
   );
 }
 
@@ -61,8 +66,11 @@ function MyBigCard(props: Sizes) {
   const { width, height } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
-    <div className={styles.bigCard} style={{ width, height, borderRadius }}>
-      height {height} width {width}
+    <div
+      className={styles.bigCard}
+      style={{ width, height, borderRadius, fontSize: height / 11 }}
+    >
+      filler
     </div>
   );
 }
