@@ -36,11 +36,12 @@ const SmallCard = unSizer(
 function Row(props: Sizes) {
   const { width, height } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
+  // -4px on height to account for border. also make sure to hide horiz scrollbar
   return (
-    <div className={styles.row} style={{ borderRadius }}>
-      <SmallCard width={width} height={height} />
-      <SmallCard width={width} height={height} />
-      <SmallCard width={width} height={height} />
+    <div className={styles.row} style={{ borderRadius, width, height }}>
+      <SmallCard width={width} height={height - 4} />
+      <SmallCard width={width} height={height - 4} />
+      <SmallCard width={width} height={height - 4} />
     </div>
   );
 }
