@@ -23,24 +23,44 @@ function RowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.rowsWrapper} style={{ width, height }}>
-      <Row width={width} height={height / 3} />
-      <Row width={width} height={height / 3} />
-      <Row width={width} height={height / 3} />
+      <RowWrapper width={width} height={height / 3} />
+      <RowWrapper width={width} height={height / 3} />
+      <RowWrapper width={width} height={height / 3} />
     </div>
   );
 }
+
 
 function Row(props: Sizes) {
   const { width, height } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
-    <div className={styles.rowWrapper} style={{ width, height }}>
       <div className={styles.row} style={{ borderRadius }}>
-        width {width} height {height}
+        <SmallCard width={width} height={height} />
+        <SmallCard width={width} height={height} />
+        <SmallCard width={width} height={height} />
       </div>
+  );
+}
+
+function MySmallCard(props: Sizes) {
+  const { width, height } = props;
+  const borderRadius = getAdaptiveBorderRadius({ width, height });
+  return (
+    <div
+      className={styles.singleInfoArea}
+      style={{ width, height, borderRadius }}
+    >
+      filler
     </div>
   );
 }
+
+const SmallCard = unSizer(withPaddingSized(6)(
+  withAutoWidthSized(defaultSizer(MySmallCard))
+));
+
+const RowWrapper = unSizer(withPaddingSized(8)(defaultSizer(Row)));
 
 function MyBigCard(props: Sizes) {
   const { width, height } = props;
