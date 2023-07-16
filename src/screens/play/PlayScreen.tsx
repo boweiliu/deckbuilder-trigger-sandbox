@@ -16,7 +16,7 @@ import {
 function getAdaptiveBorderRadius(props: Sizes): number {
   const { width, height } = props;
   const shorter = Math.min(width, height);
-  return Math.max(12, shorter / 8);
+  return shorter / 8;
 }
 
 function MySmallCard(props: Sizes) {
@@ -70,7 +70,10 @@ function MyBigCard(props: Sizes) {
       className={styles.bigCard}
       style={{ width, height, borderRadius, fontSize: height / 11 }}
     >
-      filler
+      <div className={styles.bigCardFloatingTitle}>Hand, #3</div>
+      <div className={styles.bigCardContents} style={{}}>
+        filler
+      </div>
     </div>
   );
 }

@@ -15,11 +15,30 @@
 .bigCard {
   border: solid 2px #999999;
   background-color: #4a4a44;
-  text-align: center;
+}
+
+.bigCardFloatingTitle {
+  position: absolute;
+  color: #fff;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -4px;
+  font-size: 24px;
+  background-color: #666;
+  z-index: 3;
+  border-radius: 12px;
+  border: solid 2px #bbb;
+  padding: 8px;
+}
+
+.bigCardContents {
   display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
-  font-size: 42px;
+  inset: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .rowsWrapper {
