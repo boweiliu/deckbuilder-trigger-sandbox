@@ -19,30 +19,6 @@ function getAdaptiveBorderRadius(props: Sizes): number {
   return Math.max(12, shorter / 8);
 }
 
-function RowsWrapper(props: Sizes) {
-  const { width, height } = props;
-  return (
-    <div className={styles.rowsWrapper} style={{ width, height }}>
-      <RowWrapper width={width} height={height / 3} />
-      <RowWrapper width={width} height={height / 3} />
-      <RowWrapper width={width} height={height / 3} />
-    </div>
-  );
-}
-
-
-function Row(props: Sizes) {
-  const { width, height } = props;
-  const borderRadius = getAdaptiveBorderRadius({ width, height });
-  return (
-      <div className={styles.row} style={{ borderRadius }}>
-        <SmallCard width={width} height={height} />
-        <SmallCard width={width} height={height} />
-        <SmallCard width={width} height={height} />
-      </div>
-  );
-}
-
 function MySmallCard(props: Sizes) {
   const { width, height } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
@@ -56,11 +32,34 @@ function MySmallCard(props: Sizes) {
   );
 }
 
-const SmallCard = unSizer(withPaddingSized(6)(
-  withAutoWidthSized(defaultSizer(MySmallCard))
-));
+const SmallCard = unSizer(
+  withPaddingSized(6)(withAutoWidthSized(defaultSizer(MySmallCard)))
+);
+
+function Row(props: Sizes) {
+  const { width, height } = props;
+  const borderRadius = getAdaptiveBorderRadius({ width, height });
+  return (
+    <div className={styles.row} style={{ borderRadius }}>
+      <SmallCard width={width} height={height} />
+      <SmallCard width={width} height={height} />
+      <SmallCard width={width} height={height} />
+    </div>
+  );
+}
 
 const RowWrapper = unSizer(withPaddingSized(8)(defaultSizer(Row)));
+
+function RowsWrapper(props: Sizes) {
+  const { width, height } = props;
+  return (
+    <div className={styles.rowsWrapper} style={{ width, height }}>
+      <RowWrapper width={width} height={height / 3} />
+      <RowWrapper width={width} height={height / 3} />
+      <RowWrapper width={width} height={height / 3} />
+    </div>
+  );
+}
 
 function MyBigCard(props: Sizes) {
   const { width, height } = props;
