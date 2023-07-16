@@ -42,9 +42,15 @@ function Row(props: Sizes & { count?: number }) {
   // -4px on height to account for border. also make sure to hide horiz scrollbar
   return (
     <div className={styles.row} style={{ borderRadius, width, height }}>
-      {new Array(count).fill(0).map((_, idx) => (
-        <SmallCard key={idx} width={width} height={height - 4} />
-      ))}
+      <div className={styles.rowFloatingTitle}>Shop</div>
+      <div
+        className={styles.rowContents}
+        style={{ width: width - 4, height: height - 4 }}
+      >
+        {new Array(count).fill(0).map((_, idx) => (
+          <SmallCard key={idx} width={width} height={height - 4} />
+        ))}
+      </div>
     </div>
   );
 }
