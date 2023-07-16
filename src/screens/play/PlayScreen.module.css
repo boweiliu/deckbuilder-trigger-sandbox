@@ -12,6 +12,15 @@
   text-align: center;
 }
 
+.bigCard {
+  border: solid 2px #999999;
+  background-color: #4a4a4a;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .rowsWrapper {
   background-color: #222;
   text-align: center;
@@ -28,6 +37,15 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.smallCard {
+  border: solid 1.5px #bbb;
+  background-color: #4a4a4a;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
