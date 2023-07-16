@@ -23,6 +23,7 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'no-console': 'warn',
     'import/extensions': 'off',
+    'react/no-array-index-key': 'warn',
     'no-alert': 'warn',
     'react/jsx-no-useless-fragment': 'warn',
     'react/require-default-props': 'off',

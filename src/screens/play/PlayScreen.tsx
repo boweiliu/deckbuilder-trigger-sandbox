@@ -36,15 +36,15 @@ const SmallCard = unSizer(
   withPaddingSized(6)(withAutoWidthSized(defaultSizer(MySmallCard)))
 );
 
-function Row(props: Sizes) {
-  const { width, height } = props;
+function Row(props: Sizes & { count?: number }) {
+  const { width, height, count = 5 } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   // -4px on height to account for border. also make sure to hide horiz scrollbar
   return (
     <div className={styles.row} style={{ borderRadius, width, height }}>
-      <SmallCard width={width} height={height - 4} />
-      <SmallCard width={width} height={height - 4} />
-      <SmallCard width={width} height={height - 4} />
+      {new Array(count).fill(0).map((_, idx) => (
+        <SmallCard key={idx} width={width} height={height - 4} />
+      ))}
     </div>
   );
 }
@@ -55,9 +55,9 @@ function RowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.rowsWrapper} style={{ width, height }}>
-      <RowWrapper width={width} height={height / 3} />
-      <RowWrapper width={width} height={height / 3} />
-      <RowWrapper width={width} height={height / 3} />
+      <RowWrapper width={width} height={height / 3} count={5} />
+      <RowWrapper width={width} height={height / 3} count={1} />
+      <RowWrapper width={width} height={height / 3} count={10} />
     </div>
   );
 }
