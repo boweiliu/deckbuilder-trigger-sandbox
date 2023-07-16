@@ -116,3 +116,18 @@
   align-items: center;
   font-size: 12px;
 }
+
+.smallCard.selected {
+  background-color: #777777;
+}
+
+.smallCardButton {
+  color: #fff;
+  font-size: 24px;
+  background-color: #666;
+  z-index: 3;
+  border-radius: 12px;
+  border: solid 2px #bbb;
+  padding: 8px;
+  box-shadow: 0px 0px 12px 0px #99999988;
+}

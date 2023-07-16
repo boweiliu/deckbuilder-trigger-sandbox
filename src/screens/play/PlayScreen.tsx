@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import classnames from 'classnames';
 import { PlayViewport } from '@/screens/play/PlayViewport';
 import { PlayBoard } from '@/screens/play/PlayBoard';
 import styles from './PlayScreen.module.css';
@@ -21,13 +22,23 @@ function getAdaptiveBorderRadius(props: Sizes): number {
 
 function MySmallCard(props: Sizes) {
   const { width, height } = props;
+  const selected = Boolean(Math.random() < 0.1);
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
     <div
-      className={styles.smallCard}
+      className={classnames(
+        styles.smallCard,
+        selected ? styles.selected : null
+      )}
       style={{ width, height, borderRadius, fontSize: height / 11 }}
     >
-      filler
+      {selected ? (
+        <button type="button" className={styles.smallCardButton}>
+          Play
+        </button>
+      ) : (
+        'filler'
+      )}
     </div>
   );
 }
