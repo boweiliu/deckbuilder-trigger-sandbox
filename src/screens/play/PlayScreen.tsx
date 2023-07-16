@@ -23,9 +23,7 @@ function MySmallCard(props: Sizes) {
   const { width, height } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
-    <div className={styles.smallCard} style={{ width, height, borderRadius }}>
-      filler
-    </div>
+    <div className={styles.smallCard} style={{ width, height, borderRadius }} />
   );
 }
 

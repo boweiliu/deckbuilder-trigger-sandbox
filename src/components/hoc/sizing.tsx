@@ -79,7 +79,7 @@ export const withAutoWidthSized = <T extends Sizes & { aspectRatio?: number }>(
     const {
       width: availableWidth,
       height: availableHeight,
-      aspectRatio = 4 / 7,
+      aspectRatio = 8 / 13,
     } = props;
 
     // compute the sizes available to the child
