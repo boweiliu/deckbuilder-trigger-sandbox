@@ -70,10 +70,15 @@ function MyBigCard(props: Sizes) {
       className={styles.bigCard}
       style={{ width, height, borderRadius, fontSize: height / 11 }}
     >
-      <div className={styles.bigCardFloatingTitle}>Hand, #3</div>
       <div className={styles.bigCardContents} style={{}}>
         filler
       </div>
+      <button type="button" className={styles.bigCardFloatingTitle}>
+        Hand, #3
+      </button>
+      <button type="button" className={styles.bigCardFloatingFooter}>
+        Play
+      </button>
     </div>
   );
 }
