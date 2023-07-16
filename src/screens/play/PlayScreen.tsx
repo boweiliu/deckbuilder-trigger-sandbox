@@ -16,7 +16,7 @@ import {
 function getAdaptiveBorderRadius(props: Sizes): number {
   const { width, height } = props;
   const shorter = Math.min(width, height);
-  return Math.max(12, shorter / 16);
+  return Math.max(12, shorter / 8);
 }
 
 function RowsWrapper(props: Sizes) {
