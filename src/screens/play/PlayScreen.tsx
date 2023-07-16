@@ -17,18 +17,23 @@ function RowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.rowsWrapper} style={{ width, height }}>
-      width {width} height {height}
+      <Row width={width} height={height / 3} />
+      <Row width={width} height={height / 3} />
+      <Row width={width} height={height / 3} />
     </div>
   );
 }
 
-const BigCard = withPaddingSized(12)(
-  withAutoWidthSized(defaultSizer(MyBigCard))
-);
-
-const RowsWrapperAndBigCard = unSizer(
-  withFlexLeftSized({ paddingBetween: 16 })(defaultSizer(RowsWrapper), BigCard)
-);
+function Row(props: Sizes) {
+  const { width, height } = props;
+  return (
+    <div className={styles.rowWrapper} style={{ width, height }}>
+      <div className={styles.row}>
+        width {width} height {height}
+      </div>
+    </div>
+  );
+}
 
 function MyBigCard(props: Sizes) {
   const { width, height } = props;
@@ -39,9 +44,12 @@ function MyBigCard(props: Sizes) {
   );
 }
 
-// Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
-export const PlayScreen = withGrayBorder(
-  unSizer(withPaddingSized(16)(defaultSizer(MyPlayScreen)))
+const BigCard = withPaddingSized(12)(
+  withAutoWidthSized(defaultSizer(MyBigCard))
+);
+
+const RowsWrapperAndBigCard = unSizer(
+  withFlexLeftSized({ paddingBetween: 0 })(defaultSizer(RowsWrapper), BigCard)
 );
 
 export function MyPlayScreen(props: { width: number; height: number }) {
@@ -52,3 +60,8 @@ export function MyPlayScreen(props: { width: number; height: number }) {
     </div>
   );
 }
+
+// Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
+export const PlayScreen = withGrayBorder(
+  unSizer(withPaddingSized(16)(defaultSizer(MyPlayScreen)))
+);
