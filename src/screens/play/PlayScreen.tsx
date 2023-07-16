@@ -13,6 +13,12 @@ import {
   withGrayBorder,
 } from '@/components/hoc/sizing';
 
+function getAdaptiveBorderRadius(props: Sizes): number {
+  const { width, height } = props;
+  const shorter = Math.min(width, height);
+  return Math.max(12, shorter / 16);
+}
+
 function RowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
@@ -26,9 +32,10 @@ function RowsWrapper(props: Sizes) {
 
 function Row(props: Sizes) {
   const { width, height } = props;
+  const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
     <div className={styles.rowWrapper} style={{ width, height }}>
-      <div className={styles.row}>
+      <div className={styles.row} style={{ borderRadius }}>
         width {width} height {height}
       </div>
     </div>
@@ -37,8 +44,12 @@ function Row(props: Sizes) {
 
 function MyBigCard(props: Sizes) {
   const { width, height } = props;
+  const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
-    <div className={styles.singleInfoArea} style={{ width, height }}>
+    <div
+      className={styles.singleInfoArea}
+      style={{ width, height, borderRadius }}
+    >
       height {height} width {width}
     </div>
   );
