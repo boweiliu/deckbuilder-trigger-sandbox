@@ -54,6 +54,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
   return (
     <div className={styles.row} style={{ borderRadius, width, height }}>
       <div className={styles.rowFloatingTitle}>{title}</div>
+      {count > 5 ? <div className={styles.rowLeftScroller}>{'<'}</div> : null}
       <div
         className={styles.rowContents}
         style={{ width: width - 4, height: height - 4 }}
@@ -62,6 +63,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
           <SmallCard key={idx} width={width} height={height - 4} />
         ))}
       </div>
+      {count > 5 ? <div className={styles.rowRightScroller}>{'>'}</div> : null}
     </div>
   );
 }

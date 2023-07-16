@@ -75,6 +75,35 @@
   height: 100%;
   overflow-x: clip;
   overflow-y: clip;
+  display: flex;
+}
+
+.rowLeftScroller {
+  background-color: #777;
+  left: 0px;
+  top: -2px;
+  width: 40px;
+  height: calc(100% + 4px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18.375px 0px 0px 18.375px;
+  border: solid 2px #999999;
+}
+
+.rowRightScroller {
+  background-color: #777;
+  right: -2px;
+  top: -2px;
+  width: 40px;
+  height: calc(100% + 4px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px 18.375px 18.375px 0px;
+  border: solid 2px #999999;
 }
 
 .rowContents {
@@ -90,7 +119,7 @@
   position: absolute;
   color: #fff;
   top: -4px;
-  left: 7%;
+  left: 10%;
   font-size: 14px;
   background-color: #666;
   z-index: 3;
