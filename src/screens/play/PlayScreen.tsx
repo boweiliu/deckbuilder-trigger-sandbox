@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import classnames from 'classnames';
 import { PlayViewport } from '@/screens/play/PlayViewport';
 import { PlayBoard } from '@/screens/play/PlayBoard';
@@ -22,7 +22,7 @@ function getAdaptiveBorderRadius(props: Sizes): number {
 
 function MySmallCard(props: Sizes) {
   const { width, height } = props;
-  const selected = Boolean(Math.random() < 0.1);
+  const [selected, setSelected] = useState(Boolean(Math.random() < 0.1));
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
     <div
@@ -31,6 +31,10 @@ function MySmallCard(props: Sizes) {
         selected ? styles.selected : null
       )}
       style={{ width, height, borderRadius, fontSize: height / 11 }}
+      onClick={() => setSelected((it) => !it)}
+      onKeyDown={() => setSelected((it) => !it)}
+      role="button"
+      tabIndex={0}
     >
       {selected ? (
         <button type="button" className={styles.smallCardButton}>
