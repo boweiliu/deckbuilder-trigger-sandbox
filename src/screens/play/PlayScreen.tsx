@@ -32,17 +32,16 @@ function MySmallCard(props: Sizes) {
       )}
       style={{ width, height, borderRadius, fontSize: height / 11 }}
       onClick={() => setSelected((it) => !it)}
-      onKeyDown={() => setSelected((it) => !it)}
+      onKeyDown={(e) => {
+        if (e.keyCode === 13 /* enter */ || e.keyCode === 32 /* space */) {
+          e.preventDefault();
+          setSelected((it) => !it);
+        }
+      }}
       role="button"
       tabIndex={0}
     >
-      {selected ? (
-        <button type="button" className={styles.smallCardButton}>
-          Play
-        </button>
-      ) : (
-        'filler'
-      )}
+      {selected ? <div className={styles.smallCardButton}>Play</div> : 'filler'}
     </div>
   );
 }
