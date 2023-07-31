@@ -41,7 +41,7 @@ function MySmallCard(props: Sizes) {
       role="button"
       tabIndex={0}
     >
-      {selected ? <div className={styles.smallCardButton}>Play</div> : 'filler'}
+      {selected ? <div className={styles.smallCardButton} style={{ width: (width - 8) * 0.85, paddingTop: height * 0.05, paddingBottom: height * 0.05, fontSize: (width - 8) * 0.30 }}>Play</div> : 'filler'}
     </div>
   );
 }
