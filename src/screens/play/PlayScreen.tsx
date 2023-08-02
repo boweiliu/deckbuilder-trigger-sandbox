@@ -20,6 +20,17 @@ function getAdaptiveBorderRadius(props: Sizes): number {
   return shorter / 8;
 }
 
+// Should be max-width 80% of the width of its container
+function SmallCardCenterButton(props: Sizes) {
+    return (
+        <div className={styles.smallCardButton} style={{ maxWidth: width, height: 'auto', padding, fontSize }}>
+            <div className={styles.smallCardButtonText}>
+            Play
+            </div>
+        </div>
+    );
+}
+
 function MySmallCard(props: Sizes) {
   const { width, height } = props;
   const [selected, setSelected] = useState(Boolean(Math.random() < 0.1));
@@ -41,7 +52,17 @@ function MySmallCard(props: Sizes) {
       role="button"
       tabIndex={0}
     >
-      {selected ? <div className={styles.smallCardButton} style={{ width: (width - 8) * 0.85, paddingTop: height * 0.05, paddingBottom: height * 0.05, fontSize: (width - 8) * 0.30 }}>Play</div> : 'filler'}
+      {selected ? (
+          <div className={styles.smallCardButton} style={{ width: (width - 8) * 0.85,
+                  paddingTop: height * 0.05, paddingBottom: height * 0.05,
+                  fontSize: (width - 8) * 0.30,
+                  display: 'flex',
+                  justifyContent: 'center',
+          }}>
+          <div style={{ width: 'fit-content' }}>
+          Play
+          </div>
+          </div>) : 'filler'}
     </div>
   );
 }

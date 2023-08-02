@@ -8,6 +8,7 @@
 }
 
 .home * {
-  color: #dddddd; /* default text color */
+  /* default text color */
+  /* color: #dddddd;  */
   box-sizing: border-box;
 }
