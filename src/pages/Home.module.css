@@ -7,8 +7,8 @@
   background-color: #000000;
 }
 
-.home * {
+* {
   /* default text color */
-  /* color: #dddddd;  */
+  color: #dddddd;
   box-sizing: border-box;
 }
