@@ -22,7 +22,8 @@
   color: #fff;
   left: 50%;
   transform: translateX(-50%);
-  top: -4px;
+  /* top: -4px; */
+  top: 0px;
   background-color: #666;
   z-index: 3;
   border: solid 2px #888;
@@ -34,7 +35,8 @@
   color: #fff;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -4px;
+  /* bottom: -4px; */
+  bottom: 0px;
   font-size: 24px;
   background-color: #666;
   z-index: 3;

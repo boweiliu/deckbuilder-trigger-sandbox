@@ -44,7 +44,14 @@ function TextInBox(props: {
         ...style,
       }}
     >
-      <div style={{ width: 'fit-content' }}>{children}</div>
+      <div
+        style={{
+          width: 'fit-content',
+          lineHeight: `${size}px`,
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }
