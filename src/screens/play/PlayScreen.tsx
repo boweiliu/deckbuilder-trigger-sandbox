@@ -1,4 +1,4 @@
-import { FC, useState, ReactNode } from 'react';
+import { FC, useState, ReactNode, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { PlayViewport } from '@/screens/play/PlayViewport';
 import { PlayBoard } from '@/screens/play/PlayBoard';
@@ -20,10 +20,16 @@ function getAdaptiveBorderRadius(props: Sizes): number {
   return shorter / 8;
 }
 
-function TextInBox(props: { fontSize: number; children: ReactNode }) {
-  const { fontSize, children } = props;
+function TextInBox(props: {
+  fontSize: number;
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  const { fontSize, children, className, style = {} } = props;
   return (
     <div
+      className={className}
       style={{
         paddingLeft: fontSize * 0.5,
         paddingRight: fontSize * 0.5,
@@ -33,6 +39,7 @@ function TextInBox(props: { fontSize: number; children: ReactNode }) {
         fontSize,
         display: 'flex',
         justifyContent: 'center',
+        ...style,
       }}
     >
       <div style={{ width: 'fit-content' }}>{children}</div>
@@ -43,26 +50,10 @@ function TextInBox(props: { fontSize: number; children: ReactNode }) {
 // Should be max-width 80% of the width of its container
 function SmallCardCenterButton(props: Sizes & { text?: string }) {
   const { width, height, text = 'Play' } = props;
-  const fontSize = width * 0.25;
-
   return (
-    <div
-      className={styles.smallCardButton}
-      style={{
-        maxWidth: width * 0.75,
-        height: 'auto',
-        paddingLeft: fontSize * 0.5,
-        paddingRight: fontSize * 0.5,
-        paddingTop: fontSize * 0.3,
-        paddingBottom: fontSize * 0.3,
-        borderRadius: fontSize * 0.6,
-        fontSize,
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      <div className={styles.smallCardButtonText}>{text}</div>
-    </div>
+    <TextInBox className={styles.smallCardButton} fontSize={width * 0.25}>
+      {text}
+    </TextInBox>
   );
 }
 
