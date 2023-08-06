@@ -54,7 +54,7 @@ function MySmallCard(props: Sizes) {
         styles.smallCard,
         selected ? styles.selected : null
       )}
-      style={{ width, height, borderRadius, fontSize: height / 11 }}
+      style={{ width, height, borderRadius, fontSize: height * 0.09 }}
       onClick={() => setSelected((it) => !it)}
       onKeyDown={(e) => {
         if (e.keyCode === 13 /* enter */ || e.keyCode === 32 /* space */) {
@@ -118,7 +118,7 @@ function MyBigCard(props: Sizes) {
   return (
     <div
       className={styles.bigCard}
-      style={{ width, height, borderRadius, fontSize: height / 11 }}
+      style={{ width, height, borderRadius, fontSize: height * 0.09 }}
     >
       <div className={styles.bigCardContents} style={{}}>
         filler
