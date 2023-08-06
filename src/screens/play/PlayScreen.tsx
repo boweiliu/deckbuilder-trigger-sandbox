@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, ReactNode } from 'react';
 import classnames from 'classnames';
 import { PlayViewport } from '@/screens/play/PlayViewport';
 import { PlayBoard } from '@/screens/play/PlayBoard';
@@ -20,21 +20,43 @@ function getAdaptiveBorderRadius(props: Sizes): number {
   return shorter / 8;
 }
 
+function TextInBox(props: { fontSize: number; children: ReactNode }) {
+  const { fontSize, children } = props;
+  return (
+    <div
+      style={{
+        paddingLeft: fontSize * 0.5,
+        paddingRight: fontSize * 0.5,
+        paddingTop: fontSize * 0.3,
+        paddingBottom: fontSize * 0.3,
+        borderRadius: fontSize * 0.6,
+        fontSize,
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <div style={{ width: 'fit-content' }}>{children}</div>
+    </div>
+  );
+}
+
 // Should be max-width 80% of the width of its container
 function SmallCardCenterButton(props: Sizes & { text?: string }) {
   const { width, height, text = 'Play' } = props;
+  const fontSize = width * 0.25;
+
   return (
     <div
       className={styles.smallCardButton}
       style={{
         maxWidth: width * 0.75,
         height: 'auto',
-        paddingLeft: width * 0.12,
-        paddingRight: width * 0.12,
-        paddingTop: width * 0.08,
-        paddingBottom: width * 0.08,
-        borderRadius: width * 0.15,
-        fontSize: width * 0.25,
+        paddingLeft: fontSize * 0.5,
+        paddingRight: fontSize * 0.5,
+        paddingTop: fontSize * 0.3,
+        paddingBottom: fontSize * 0.3,
+        borderRadius: fontSize * 0.6,
+        fontSize,
         display: 'flex',
         justifyContent: 'center',
       }}
@@ -123,10 +145,18 @@ function MyBigCard(props: Sizes) {
       <div className={styles.bigCardContents} style={{}}>
         filler
       </div>
-      <button type="button" className={styles.bigCardFloatingTitle}>
+      <button
+        type="button"
+        className={styles.bigCardFloatingTitle}
+        style={{ fontSize: height * 0.05 }}
+      >
         Hand, #3
       </button>
-      <button type="button" className={styles.bigCardFloatingFooter}>
+      <button
+        type="button"
+        className={styles.bigCardFloatingFooter}
+        style={{ fontSize: height * 0.05 }}
+      >
         Play
       </button>
     </div>
