@@ -24,19 +24,21 @@ function TextInBox(props: {
   fontSize: number;
   children: ReactNode;
   className?: string;
+  role?: string;
   style?: CSSProperties;
 }) {
-  const { fontSize, children, className, style = {} } = props;
+  const { fontSize: size, children, className, style = {}, role } = props;
   return (
     <div
+      role={role}
       className={className}
       style={{
-        paddingLeft: fontSize * 0.5,
-        paddingRight: fontSize * 0.5,
-        paddingTop: fontSize * 0.3,
-        paddingBottom: fontSize * 0.3,
-        borderRadius: fontSize * 0.6,
-        fontSize,
+        paddingLeft: size * 0.5,
+        paddingRight: size * 0.5,
+        paddingTop: size * 0.3,
+        paddingBottom: size * 0.3,
+        borderRadius: size * 0.5,
+        fontSize: size,
         display: 'flex',
         justifyContent: 'center',
         ...style,
@@ -81,7 +83,7 @@ function MySmallCard(props: Sizes) {
       {selected ? (
         <SmallCardCenterButton width={width} height={height} />
       ) : (
-        'filler'
+        <div style={{ fontSize: height * 0.09 }}>filler</div>
       )}
     </div>
   );
@@ -97,7 +99,9 @@ function Row(props: Sizes & { count?: number; title?: string }) {
   // -4px on height to account for border. also make sure to hide horiz scrollbar
   return (
     <div className={styles.row} style={{ borderRadius, width, height }}>
-      <div className={styles.rowFloatingTitle}>{title}</div>
+      <TextInBox className={styles.rowFloatingTitle} fontSize={height * 0.075}>
+        {title}
+      </TextInBox>
       {count > 5 ? <div className={styles.rowLeftScroller}>{'<'}</div> : null}
       <div
         className={styles.rowContents}
@@ -136,20 +140,19 @@ function MyBigCard(props: Sizes) {
       <div className={styles.bigCardContents} style={{}}>
         filler
       </div>
-      <button
-        type="button"
+      <TextInBox
         className={styles.bigCardFloatingTitle}
-        style={{ fontSize: height * 0.05 }}
+        fontSize={height * 0.05}
       >
         Hand, #3
-      </button>
-      <button
-        type="button"
+      </TextInBox>
+      <TextInBox
+        role="button"
         className={styles.bigCardFloatingFooter}
-        style={{ fontSize: height * 0.05 }}
+        fontSize={height * 0.05}
       >
         Play
-      </button>
+      </TextInBox>
     </div>
   );
 }
