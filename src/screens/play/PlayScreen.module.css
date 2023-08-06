@@ -139,7 +139,7 @@
 .smallCard {
   border: solid 2px #999;
   color: #bbb;
-  background-color: #4a4a44;
+  background-color: #4a4a4a;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -149,20 +149,21 @@
 
 .smallCard.selected {
   background-color: #555;
+  border-color: #ddd;
 }
 
 .smallCardButton {
-  color: #ccc;
-  background-color: #777;
+  color: #ddd;
+  background-color: #666;
   z-index: 3;
   text-align: center;
   display: flex;
   justify-content: center;
   border-radius: 12px;
-  border: solid 2px #999;
+  border: solid 2px #ddd;
   box-shadow: 0px 0px 12px 0px #99999988;
 }
 
 .smallCardButtonText {
-    width: fit-content;
+  width: fit-content;
 }
