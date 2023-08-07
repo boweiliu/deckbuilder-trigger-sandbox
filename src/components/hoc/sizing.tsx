@@ -30,10 +30,22 @@ export const withGrayBorder = <T extends Sizes & { borderWidth?: number }>(
   };
 };
 
-export const withPaddingSized: (p: number) => HOCSized = (padding) => {
+type CallbackOrValue<T> = T | ((p: Sizes) => T);
+function getValue<T>(x: CallbackOrValue<T>, props: Sizes): T {
+  if (typeof x === 'function') {
+    return (x as (p: Sizes) => T)(props);
+  }
+  return x;
+}
+
+export const withPaddingSized: (p: CallbackOrValue<number>) => HOCSized = (
+  paddingOrCallback
+) => {
   return <T extends Sizes>(SizedChildComponent: FCSized<T>) => {
     return (props: T) => {
       const { width: availableWidth, height: availableHeight } = props;
+
+      const padding = getValue(paddingOrCallback, props);
 
       const childAvailableSizes = {
         height: availableHeight - 2 * padding,

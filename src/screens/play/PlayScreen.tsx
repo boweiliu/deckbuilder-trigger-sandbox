@@ -97,7 +97,9 @@ function MySmallCard(props: Sizes) {
 }
 
 const SmallCard = unSizer(
-  withPaddingSized(6)(withAutoWidthSized(defaultSizer(MySmallCard)))
+  withPaddingSized(({ width, height }) => height * 0.04)(
+    withAutoWidthSized(defaultSizer(MySmallCard))
+  )
 );
 
 function Row(props: Sizes & { count?: number; title?: string }) {
@@ -183,5 +185,9 @@ export function MyPlayScreen(props: { width: number; height: number }) {
 
 // Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
 export const PlayScreen = withGrayBorder(
-  unSizer(withPaddingSized(16)(defaultSizer(MyPlayScreen)))
+  unSizer(
+    withPaddingSized(({ width, height }) => Math.min(width, height) * 0.01)(
+      defaultSizer(MyPlayScreen)
+    )
+  )
 );
