@@ -47,7 +47,7 @@ function TextInBox(props: {
       <div
         style={{
           width: 'fit-content',
-          lineHeight: `${size}px`,
+          lineHeight: 1,
         }}
       >
         {children}
