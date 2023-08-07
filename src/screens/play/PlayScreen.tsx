@@ -125,7 +125,9 @@ function Row(props: Sizes & { count?: number; title?: string }) {
   );
 }
 
-const RowWrapper = unSizer(withPaddingSized(8)(defaultSizer(Row)));
+const RowWrapper = unSizer(
+  withPaddingSized(({ width, height }) => height * 0.04)(defaultSizer(Row))
+);
 
 function RowsWrapper(props: Sizes) {
   const { width, height } = props;
@@ -166,7 +168,7 @@ function MyBigCard(props: Sizes) {
   );
 }
 
-const BigCard = withPaddingSized(12)(
+const BigCard = withPaddingSized(({ width, height }) => width * 0.015)(
   withAutoWidthSized(defaultSizer(MyBigCard))
 );
 
