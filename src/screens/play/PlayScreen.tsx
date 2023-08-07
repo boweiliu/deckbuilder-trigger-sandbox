@@ -12,7 +12,6 @@ import {
   defaultSizer,
   unSizer,
   withFlexLeftSized,
-  withGrayBorder,
 } from '@/components/hoc/sizing';
 
 function getAdaptiveBorderRadius(props: Sizes): number {
@@ -143,11 +142,11 @@ function RowsWrapper(props: Sizes) {
 
 function MyBigCard(props: Sizes) {
   const { width, height } = props;
-  const borderRadius = getAdaptiveBorderRadius({ width, height });
+  const borderRadius = getAdaptiveBorderRadius({ width, height }) + 4;
   return (
     <div
       className={styles.bigCard}
-      style={{ width, height, borderRadius, fontSize: height * 0.09 }}
+      style={{ width, height, borderRadius, fontSize: height * 0.09, zIndex: -1, }}
     >
       <div className={styles.bigCardContents} style={{}}>
         filler
@@ -169,8 +168,11 @@ function MyBigCard(props: Sizes) {
   );
 }
 
-const BigCard = withPaddingSized(({ width, height }) => width * 0.015)(
-  withAutoWidthSized(defaultSizer(MyBigCard))
+const BigCard = 
+    withPaddingSized(({ width, height }) => width * 0.015)(
+    withBorderSized(2, { className: styles.bigCardBorder })(
+        withAutoWidthSized(defaultSizer(MyBigCard))
+    )
 );
 
 const RowsWrapperAndBigCard = unSizer(

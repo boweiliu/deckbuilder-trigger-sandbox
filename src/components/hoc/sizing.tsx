@@ -14,22 +14,12 @@ export type HOC2Sized = <T extends Sizes>(
   d: FCSized<T>
 ) => FCSized<T>;
 
-export const withGrayBorder = <T extends Sizes & { borderWidth?: number }>(
-  ChildComponent: FC<T>
-): FC<T> => {
-  return function grayBorder(props: T) {
-    const { width, height, borderWidth = 6 } = props;
-    return (
-      <div className={styles.grayBorder} style={{ borderWidth, width, height }}>
-        <ChildComponent
-          {...props}
-          width={width - 2 * borderWidth}
-          height={height - 2 * borderWidth}
-        />
-      </div>
-    );
-  };
-};
+
+function getAdaptiveBorderRadius(props: Sizes): number {
+  const { width, height } = props;
+  const shorter = Math.min(width, height);
+  return shorter / 8;
+}
 
 export const withBorderSized: (
   width: CallbackOrValue<number>,
@@ -40,6 +30,7 @@ export const withBorderSized: (
       const { width: availableWidth, height: availableHeight } = props;
 
       const borderWidth = getValue(widthOrCallback, props);
+        const borderRadius = getAdaptiveBorderRadius(props);
 
       const childAvailableSizes = {
         height: availableHeight - 2 * borderWidth,
@@ -68,6 +59,9 @@ export const withBorderSized: (
             width: mySizes.width,
             height: mySizes.height,
             borderWidth,
+            borderRadius,
+            zIndex: 4,
+
             ...(opts.style || {}),
           }}
         >
