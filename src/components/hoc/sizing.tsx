@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, CSSProperties } from 'react';
+import classnames from 'classnames';
 import styles from './sizing.module.css';
 
 export type Sizes = { width: number; height: number };
@@ -27,6 +28,53 @@ export const withGrayBorder = <T extends Sizes & { borderWidth?: number }>(
         />
       </div>
     );
+  };
+};
+
+export const withBorderSized: (
+  width: CallbackOrValue<number>,
+  opts: { style?: CSSProperties; className?: string }
+) => HOCSized = (widthOrCallback, opts = {}) => {
+  return <T extends Sizes>(SizedChildComponent: FCSized<T>) => {
+    return (props: T) => {
+      const { width: availableWidth, height: availableHeight } = props;
+
+      const borderWidth = getValue(widthOrCallback, props);
+
+      const childAvailableSizes = {
+        height: availableHeight - 2 * borderWidth,
+        width: availableWidth - 2 * borderWidth,
+      };
+
+      const [childRenderedSizes, children] = SizedChildComponent({
+        ...props,
+        ...childAvailableSizes,
+      });
+
+      const { width: renderedWidth, height: renderedHeight } =
+        childRenderedSizes;
+
+      const mySizes = {
+        width: renderedWidth + 2 * borderWidth,
+        height: renderedHeight + 2 * borderWidth,
+      };
+
+      return [
+        mySizes,
+        // eslint-disable-next-line react/jsx-key
+        <div
+          className={classnames(styles.withBorder, opts.className)}
+          style={{
+            width: mySizes.width,
+            height: mySizes.height,
+            borderWidth,
+            ...(opts.style || {}),
+          }}
+        >
+          {children}
+        </div>,
+      ];
+    };
   };
 };
 

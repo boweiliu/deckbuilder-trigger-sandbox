@@ -6,6 +6,7 @@ import styles from './PlayScreen.module.css';
 import {
   Sizes,
   FCSized,
+  withBorderSized,
   withAutoWidthSized,
   withPaddingSized,
   defaultSizer,
@@ -186,8 +187,10 @@ export function MyPlayScreen(props: { width: number; height: number }) {
 }
 
 // Reading in order, goes outside in. so for instance here we apply gray border then apply padding.
-export const PlayScreen = withGrayBorder(
-  unSizer(
+export const PlayScreen = unSizer(
+  withBorderSized(6, {
+    style: { borderColor: '#888888', borderStyle: 'solid' },
+  })(
     withPaddingSized(({ width, height }) => Math.min(width, height) * 0.01)(
       defaultSizer(MyPlayScreen)
     )
