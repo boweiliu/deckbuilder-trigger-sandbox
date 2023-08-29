@@ -99,7 +99,7 @@ function MySmallCard(props: Sizes) {
 
 const SmallCard = unSizer(
   withPaddingSized(({ width, height }) => height * 0.04)(
-    withAutoWidthSized(defaultSizer(MySmallCard))
+    withAutoWidthSized( 8./13 )(defaultSizer(MySmallCard))
   )
 );
 
@@ -172,7 +172,7 @@ function MyBigCard(props: Sizes) {
 const BigCard = 
     withPaddingSized(({ width, height }) => width * 0.015)(
     withBorderSized(2, { className: styles.bigCardBorder, isRounded: true })(
-        withAutoWidthSized(defaultSizer(MyBigCard))
+        withAutoWidthSized(8./13)(defaultSizer(MyBigCard))
     )
 );
 
