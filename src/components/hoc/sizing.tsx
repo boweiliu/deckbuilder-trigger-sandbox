@@ -40,7 +40,7 @@ export const withBorderSized: (
 
         // invoke child
       const [childRenderedSizes, children] = SizedChildComponent({
-          borderRadius: borderRadius - borderWidth, // adjust the radius down accordingly
+          borderRadius: borderRadius - borderWidth * 0.9, // adjust the radius down accordingly, but make it a bit bigger to look better
         ...props,
         ...childAvailableSizes,
       });
