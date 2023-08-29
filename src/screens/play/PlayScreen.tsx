@@ -157,6 +157,7 @@ function MyBigCard(props: Sizes) {
       <TextInBox
         className={styles.bigCardFloatingTitle}
         fontSize={height * 0.05}
+        style={{ top: height * -0.030 }}
       >
         Hand, #3
       </TextInBox>
@@ -164,6 +165,7 @@ function MyBigCard(props: Sizes) {
         role="button"
         className={styles.bigCardFloatingFooter}
         fontSize={height * 0.05}
+        style={{ bottom: height * -0.030 }}
       >
         Play
       </TextInBox>
