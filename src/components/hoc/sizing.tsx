@@ -15,7 +15,7 @@ export type HOC2Sized = <T extends Sizes>(
 ) => FCSized<T>;
 
 
-function getAdaptiveBorderRadius(props: Sizes): number {
+export function getAdaptiveBorderRadius(props: Sizes): number {
   const { width, height } = props;
   const shorter = Math.min(width, height);
   return shorter * 0.080;
@@ -30,17 +30,19 @@ export const withBorderSized: (
       const { width: availableWidth, height: availableHeight } = props;
 
       const borderWidth = getValue(widthOrCallback, props);
-      const borderRadius = opts.isRounded ? getAdaptiveBorderRadius(props) : 0;
 
         // compute the available size of the child by subtracting the border
       const childAvailableSizes = {
         height: availableHeight - 2 * borderWidth,
         width: availableWidth - 2 * borderWidth,
       };
+      const childBorderRadius = opts.isRounded ? getAdaptiveBorderRadius(childAvailableSizes) : 0;
+      const borderRadius = opts.isRounded ? childBorderRadius + borderWidth : 0;
+      // const borderRadius = opts.isRounded ? getAdaptiveBorderRadius(props) : 0;
 
         // invoke child
       const [childRenderedSizes, children] = SizedChildComponent({
-          borderRadius: borderRadius - borderWidth * 0.9, // adjust the radius down accordingly, but make it a bit bigger to look better
+          borderRadius: childBorderRadius + borderWidth * 0.0, // increase child radius by a little so it doesn't interact with the parent even after pixel rounding
         ...props,
         ...childAvailableSizes,
       });

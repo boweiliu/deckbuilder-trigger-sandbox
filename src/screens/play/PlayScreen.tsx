@@ -12,15 +12,11 @@ import {
   defaultSizer,
   unSizer,
   withFlexLeftSized,
+getAdaptiveBorderRadius,
 } from '@/components/hoc/sizing';
 
-const ASPECT_RATIO = 4/7
-
-function getAdaptiveBorderRadius(props: Sizes): number {
-  const { width, height } = props;
-  const shorter = Math.min(width, height);
-  return shorter / 8;
-}
+const ASPECT_RATIO = 4/7;
+const CARD_BORDER_WIDTH = 2;
 
 function TextInBox(props: {
   fontSize: number;
@@ -101,7 +97,7 @@ function MySmallCard(props: Sizes) {
 
 const SmallCard = unSizer(
   withPaddingSized(({ width, height }) => height * 0.04)(
-      withBorderSized(2, { className: styles.smallCardBorder, isRounded: true })(
+      withBorderSized(CARD_BORDER_WIDTH, { className: styles.smallCardBorder, isRounded: true })(
         withAutoWidthSized( ASPECT_RATIO )(defaultSizer(MySmallCard))
       )
   )
@@ -177,7 +173,7 @@ function MyBigCard(props: Sizes) {
 
 const BigCard = 
     withPaddingSized(({ width, height }) => width * 0.015)(
-    withBorderSized(2, { className: styles.bigCardBorder, isRounded: true })(
+    withBorderSized(CARD_BORDER_WIDTH, { className: styles.bigCardBorder, isRounded: true })(
         withAutoWidthSized(ASPECT_RATIO)(defaultSizer(MyBigCard))
     )
 );
