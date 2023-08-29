@@ -139,10 +139,9 @@
 }
 
 .smallCardBorder {
-  border: solid 2px #999;
-  }
+  border: solid 0px #999999;
+}
 .smallCard {
-  border: solid 2px #999;
   color: #bbb;
   background-color: #4a4a4a;
   text-align: center;

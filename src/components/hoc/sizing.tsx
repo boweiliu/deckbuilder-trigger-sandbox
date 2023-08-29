@@ -32,16 +32,20 @@ export const withBorderSized: (
       const borderWidth = getValue(widthOrCallback, props);
       const borderRadius = opts.isRounded ? getAdaptiveBorderRadius(props) : 0;
 
+        // compute the available size of the child by subtracting the border
       const childAvailableSizes = {
         height: availableHeight - 2 * borderWidth,
         width: availableWidth - 2 * borderWidth,
       };
 
+        // invoke child
       const [childRenderedSizes, children] = SizedChildComponent({
+          borderRadius: borderRadius - borderWidth, // adjust the radius down accordingly
         ...props,
         ...childAvailableSizes,
       });
 
+        // get the rendered size of the child and add the border back
       const { width: renderedWidth, height: renderedHeight } =
         childRenderedSizes;
 

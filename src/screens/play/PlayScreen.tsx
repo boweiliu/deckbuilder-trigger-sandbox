@@ -70,9 +70,9 @@ function SmallCardCenterButton(props: Sizes & { text?: string }) {
 }
 
 function MySmallCard(props: Sizes) {
-  const { width, height } = props;
+  const { width, height, borderRadius } = props;
   const [selected, setSelected] = useState(Boolean(Math.random() < 0.1));
-  const borderRadius = getAdaptiveBorderRadius({ width, height });
+  // const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
     <div
       className={classnames(
@@ -101,7 +101,9 @@ function MySmallCard(props: Sizes) {
 
 const SmallCard = unSizer(
   withPaddingSized(({ width, height }) => height * 0.04)(
+      withBorderSized(2, { className: styles.smallCardBorder, isRounded: true })(
         withAutoWidthSized( ASPECT_RATIO )(defaultSizer(MySmallCard))
+      )
   )
 );
 
