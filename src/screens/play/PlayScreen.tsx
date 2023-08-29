@@ -142,11 +142,11 @@ function RowsWrapper(props: Sizes) {
 
 function MyBigCard(props: Sizes) {
   const { width, height } = props;
-  const borderRadius = getAdaptiveBorderRadius({ width, height }) + 4;
+  // const borderRadius = getAdaptiveBorderRadius({ width, height }) + 4;
   return (
     <div
       className={styles.bigCard}
-      style={{ width, height, borderRadius, fontSize: height * 0.09, zIndex: -1, }}
+      style={{ width, height, borderRadius: 'inherit', fontSize: height * 0.09 }}
     >
       <div className={styles.bigCardContents} style={{}}>
         filler
@@ -170,7 +170,7 @@ function MyBigCard(props: Sizes) {
 
 const BigCard = 
     withPaddingSized(({ width, height }) => width * 0.015)(
-    withBorderSized(2, { className: styles.bigCardBorder })(
+    withBorderSized(2, { className: styles.bigCardBorder, isRounded: true })(
         withAutoWidthSized(defaultSizer(MyBigCard))
     )
 );

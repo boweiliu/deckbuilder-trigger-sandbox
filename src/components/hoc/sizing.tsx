@@ -23,14 +23,14 @@ function getAdaptiveBorderRadius(props: Sizes): number {
 
 export const withBorderSized: (
   width: CallbackOrValue<number>,
-  opts: { style?: CSSProperties; className?: string }
+  opts: { style?: CSSProperties; className?: string, isRounded?: boolean }
 ) => HOCSized = (widthOrCallback, opts = {}) => {
   return <T extends Sizes>(SizedChildComponent: FCSized<T>) => {
     return (props: T) => {
       const { width: availableWidth, height: availableHeight } = props;
 
       const borderWidth = getValue(widthOrCallback, props);
-        const borderRadius = getAdaptiveBorderRadius(props);
+      const borderRadius = opts.isRounded ? getAdaptiveBorderRadius(props) : 0;
 
       const childAvailableSizes = {
         height: availableHeight - 2 * borderWidth,
@@ -60,8 +60,6 @@ export const withBorderSized: (
             height: mySizes.height,
             borderWidth,
             borderRadius,
-            zIndex: 4,
-
             ...(opts.style || {}),
           }}
         >
