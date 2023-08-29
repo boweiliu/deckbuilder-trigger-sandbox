@@ -14,6 +14,8 @@ import {
   withFlexLeftSized,
 } from '@/components/hoc/sizing';
 
+const ASPECT_RATIO = 4/7
+
 function getAdaptiveBorderRadius(props: Sizes): number {
   const { width, height } = props;
   const shorter = Math.min(width, height);
@@ -99,7 +101,7 @@ function MySmallCard(props: Sizes) {
 
 const SmallCard = unSizer(
   withPaddingSized(({ width, height }) => height * 0.04)(
-    withAutoWidthSized( 8./13 )(defaultSizer(MySmallCard))
+        withAutoWidthSized( ASPECT_RATIO )(defaultSizer(MySmallCard))
   )
 );
 
@@ -172,7 +174,7 @@ function MyBigCard(props: Sizes) {
 const BigCard = 
     withPaddingSized(({ width, height }) => width * 0.015)(
     withBorderSized(2, { className: styles.bigCardBorder, isRounded: true })(
-        withAutoWidthSized(8./13)(defaultSizer(MyBigCard))
+        withAutoWidthSized(ASPECT_RATIO)(defaultSizer(MyBigCard))
     )
 );
 
