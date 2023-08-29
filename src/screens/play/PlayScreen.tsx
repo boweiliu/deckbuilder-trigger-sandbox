@@ -12,14 +12,11 @@ import {
   defaultSizer,
   unSizer,
   withFlexLeftSized,
-  withGrayBorder,
+  getAdaptiveBorderRadius,
 } from '@/components/hoc/sizing';
 
-function getAdaptiveBorderRadius(props: Sizes): number {
-  const { width, height } = props;
-  const shorter = Math.min(width, height);
-  return shorter / 8;
-}
+const ASPECT_RATIO = 4 / 7;
+const CARD_BORDER_WIDTH = 2;
 
 function TextInBox(props: {
   fontSize: number;
@@ -48,6 +45,7 @@ function TextInBox(props: {
       <div
         style={{
           width: 'fit-content',
+          /* lineHeight 0.7 is more closely fitting to text, but this looks fine */
           lineHeight: 1,
         }}
       >
@@ -67,10 +65,10 @@ function SmallCardCenterButton(props: Sizes & { text?: string }) {
   );
 }
 
-function MySmallCard(props: Sizes) {
-  const { width, height } = props;
+function MySmallCard(props: Sizes & { borderRadius?: number }) {
+  const { width, height, borderRadius } = props;
   const [selected, setSelected] = useState(Boolean(Math.random() < 0.1));
-  const borderRadius = getAdaptiveBorderRadius({ width, height });
+  // const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
     <div
       className={classnames(
@@ -99,7 +97,10 @@ function MySmallCard(props: Sizes) {
 
 const SmallCard = unSizer(
   withPaddingSized(({ width, height }) => height * 0.04)(
-    withAutoWidthSized(defaultSizer(MySmallCard))
+    withBorderSized(CARD_BORDER_WIDTH, {
+      className: styles.smallCardBorder,
+      isRounded: true,
+    })(withAutoWidthSized(ASPECT_RATIO)(defaultSizer(MySmallCard)))
   )
 );
 
@@ -143,11 +144,16 @@ function RowsWrapper(props: Sizes) {
 
 function MyBigCard(props: Sizes) {
   const { width, height } = props;
-  const borderRadius = getAdaptiveBorderRadius({ width, height });
+  // const borderRadius = getAdaptiveBorderRadius({ width, height }) + 4;
   return (
     <div
       className={styles.bigCard}
-      style={{ width, height, borderRadius, fontSize: height * 0.09 }}
+      style={{
+        width,
+        height,
+        borderRadius: 'inherit',
+        fontSize: height * 0.09,
+      }}
     >
       <div className={styles.bigCardContents} style={{}}>
         filler
@@ -155,6 +161,7 @@ function MyBigCard(props: Sizes) {
       <TextInBox
         className={styles.bigCardFloatingTitle}
         fontSize={height * 0.05}
+        style={{ top: height * -0.03 }}
       >
         Hand, #3
       </TextInBox>
@@ -162,6 +169,7 @@ function MyBigCard(props: Sizes) {
         role="button"
         className={styles.bigCardFloatingFooter}
         fontSize={height * 0.05}
+        style={{ bottom: height * -0.03 }}
       >
         Play
       </TextInBox>
@@ -170,7 +178,10 @@ function MyBigCard(props: Sizes) {
 }
 
 const BigCard = withPaddingSized(({ width, height }) => width * 0.015)(
-  withAutoWidthSized(defaultSizer(MyBigCard))
+  withBorderSized(CARD_BORDER_WIDTH, {
+    className: styles.bigCardBorder,
+    isRounded: true,
+  })(withAutoWidthSized(ASPECT_RATIO)(defaultSizer(MyBigCard)))
 );
 
 const RowsWrapperAndBigCard = unSizer(

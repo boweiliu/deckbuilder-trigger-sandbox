@@ -14,26 +14,15 @@ export type HOC2Sized = <T extends Sizes>(
   d: FCSized<T>
 ) => FCSized<T>;
 
-export const withGrayBorder = <T extends Sizes & { borderWidth?: number }>(
-  ChildComponent: FC<T>
-): FC<T> => {
-  return function grayBorder(props: T) {
-    const { width, height, borderWidth = 6 } = props;
-    return (
-      <div className={styles.grayBorder} style={{ borderWidth, width, height }}>
-        <ChildComponent
-          {...props}
-          width={width - 2 * borderWidth}
-          height={height - 2 * borderWidth}
-        />
-      </div>
-    );
-  };
-};
+export function getAdaptiveBorderRadius(props: Sizes): number {
+  const { width, height } = props;
+  const shorter = Math.min(width, height);
+  return shorter * 0.08;
+}
 
 export const withBorderSized: (
   width: CallbackOrValue<number>,
-  opts: { style?: CSSProperties; className?: string }
+  opts: { style?: CSSProperties; className?: string; isRounded?: boolean }
 ) => HOCSized = (widthOrCallback, opts = {}) => {
   return <T extends Sizes>(SizedChildComponent: FCSized<T>) => {
     return (props: T) => {
@@ -41,16 +30,25 @@ export const withBorderSized: (
 
       const borderWidth = getValue(widthOrCallback, props);
 
+      // compute the available size of the child by subtracting the border
       const childAvailableSizes = {
         height: availableHeight - 2 * borderWidth,
         width: availableWidth - 2 * borderWidth,
       };
+      const childBorderRadius = opts.isRounded
+        ? getAdaptiveBorderRadius(childAvailableSizes)
+        : 0;
+      const borderRadius = opts.isRounded ? childBorderRadius + borderWidth : 0;
+      // const borderRadius = opts.isRounded ? getAdaptiveBorderRadius(props) : 0;
 
+      // invoke child
       const [childRenderedSizes, children] = SizedChildComponent({
+        borderRadius: childBorderRadius + borderWidth * 0.0, // increase child radius by a little so it doesn't interact with the parent even after pixel rounding
         ...props,
         ...childAvailableSizes,
       });
 
+      // get the rendered size of the child and add the border back
       const { width: renderedWidth, height: renderedHeight } =
         childRenderedSizes;
 
@@ -68,6 +66,7 @@ export const withBorderSized: (
             width: mySizes.width,
             height: mySizes.height,
             borderWidth,
+            borderRadius,
             ...(opts.style || {}),
           }}
         >
@@ -130,8 +129,42 @@ export const withPaddingSized: (p: CallbackOrValue<number>) => HOCSized = (
   };
 };
 
+// export const withPaddingSized: (p: CallbackOrValue<number>) => HOCSized = (
+// paddingOrCallback
+// ) => {
+// return <T extends Sizes>(SizedChildComponent: FCSized<T>) => {
+export const withAutoWidthSized: (a: CallbackOrValue<number>) => HOCSized = (
+  aspectRatioOrCallback
+) => {
+  return <T extends Sizes>(SizedChildComponent: FCSized<T>) => {
+    return (props: T) => {
+      const aspectRatio = getValue(aspectRatioOrCallback, props);
+      // grab the available sizes, as passed down from our wrapper
+      const {
+        width: availableWidth,
+        height: availableHeight,
+        // aspectRatio = 8 / 13,
+      } = props;
+
+      // compute the sizes available to the child
+      const childAvailableSizes = {
+        height: availableHeight,
+        width: availableHeight * aspectRatio,
+      };
+
+      // invoke the child
+      const [childRenderedSizes, children] = SizedChildComponent({
+        ...props,
+        ...childAvailableSizes,
+      });
+
+      return [childRenderedSizes, children];
+    };
+  };
+};
+
 // aspectRatio = width / height
-export const withAutoWidthSized = <T extends Sizes & { aspectRatio?: number }>(
+export const withAutoWidthSized3 = <T extends Sizes & { aspectRatio?: number }>(
   SizedChildComponent: FCSized<T>
 ): FCSized<T> => {
   return (props) => {
