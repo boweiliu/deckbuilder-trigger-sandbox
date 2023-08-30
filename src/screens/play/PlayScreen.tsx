@@ -60,7 +60,7 @@ function TextInBox(props: {
 function SmallCardCenterButton(props: Sizes & { text?: string }) {
   const { width, height, text = 'Play' } = props;
   return (
-    <TextInBox className={styles.smallCardButton} fontSize={width * 0.25}>
+    <TextInBox className={styles.smallCardButton} fontSize={width * 0.3}>
       {text}
     </TextInBox>
   );
@@ -116,7 +116,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
     <div className={styles.rowArea} style={{ width, height }}>
       <TextInBox
         className={styles.rowFloatingTitle}
-        fontSize={height * 0.075}
+        fontSize={height * 0.12}
         style={{ top: height * -0.05, left: width * 0.1 }}
       >
         {title}
