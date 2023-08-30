@@ -128,7 +128,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
           <div
             className={styles.rowLeftScroller}
             style={{
-              width: height * 0.28,
+              width: height * 0.22,
               fontSize: height * 0.15,
               borderRadius: `${innerBorderRadius}px 0px 0px ${innerBorderRadius}px`,
             }}
@@ -136,10 +136,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
             {'<'}
           </div>
         )}
-        <div
-          className={styles.rowContents}
-          style={{ width: width - 4, height: height - 4 }}
-        >
+        <div className={styles.rowContents} style={{ height: height - 4 }}>
           {new Array(count).fill(0).map((_, idx) => (
             <SmallCard key={idx} width={width} height={height - 4} />
           ))}
@@ -148,7 +145,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
           <div
             className={styles.rowRightScroller}
             style={{
-              width: height * 0.28,
+              width: height * 0.22,
               fontSize: height * 0.15,
               borderRadius: `0px ${innerBorderRadius}px ${innerBorderRadius}px 0px`,
             }}

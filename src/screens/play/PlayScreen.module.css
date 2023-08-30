@@ -93,6 +93,7 @@
 .rowLeftScroller {
   background-color: #777;
   position: relative;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,6 +103,7 @@
 .rowRightScroller {
   background-color: #777;
   position: relative;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +113,7 @@
 .rowContents {
   top: 0;
   left: 0;
+  flex: 1 1 100%;
   display: flex;
   overflow-x: scroll;
   overflow-y: clip;
@@ -122,6 +125,8 @@
 .rowContents::-webkit-scrollbar {
   width: 0px;
   height: 0px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .rowContents::-webkit-scrollbar-track {
   background-color: transparent;
