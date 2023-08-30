@@ -37,6 +37,7 @@ function TextInBox(props: {
         paddingTop: size * 0.3,
         paddingBottom: size * 0.3,
         borderRadius: size * 0.5,
+        whiteSpace: 'nowrap',
         fontSize: size,
         display: 'flex',
         justifyContent: 'center',
@@ -166,16 +167,15 @@ function RowsWrapper(props: Sizes) {
   );
 }
 
-function MyBigCard(props: Sizes) {
-  const { width, height } = props;
-  // const borderRadius = getAdaptiveBorderRadius({ width, height }) + 4;
+function MyBigCard(props: Sizes & { borderRadius?: number }) {
+  const { width, height, borderRadius } = props;
   return (
     <div
       className={styles.bigCard}
       style={{
         width,
         height,
-        borderRadius: 'inherit',
+        borderRadius,
         fontSize: height * 0.09,
       }}
     >
@@ -184,7 +184,7 @@ function MyBigCard(props: Sizes) {
       </div>
       <TextInBox
         className={styles.bigCardFloatingTitle}
-        fontSize={height * 0.05}
+        fontSize={height * 0.075}
         style={{ top: height * -0.03 }}
       >
         Hand, #3
@@ -192,7 +192,7 @@ function MyBigCard(props: Sizes) {
       <TextInBox
         role="button"
         className={styles.bigCardFloatingFooter}
-        fontSize={height * 0.05}
+        fontSize={height * 0.075}
         style={{ bottom: height * -0.03 }}
       >
         Play
