@@ -125,7 +125,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
         {shouldShowScrollers && (
           <div
             className={styles.rowLeftScroller}
-            style={{ width: height * 0.25, fontSize: height * 0.15 }}
+            style={{ width: height * 0.28, fontSize: height * 0.15 }}
           >
             {'<'}
           </div>
@@ -141,7 +141,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
         {shouldShowScrollers && (
           <div
             className={styles.rowRightScroller}
-            style={{ width: height * 0.25, fontSize: height * 0.15 }}
+            style={{ width: height * 0.28, fontSize: height * 0.15 }}
           >
             {'>'}
           </div>
