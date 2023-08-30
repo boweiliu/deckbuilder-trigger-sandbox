@@ -125,7 +125,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
         {shouldShowScrollers && (
           <div
             className={styles.rowLeftScroller}
-            style={{ width: width * 0.03 }}
+            style={{ width: height * 0.1 }}
           >
             {'<'}
           </div>
@@ -141,7 +141,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
         {shouldShowScrollers && (
           <div
             className={styles.rowRightScroller}
-            style={{ width: width * 0.03 }}
+            style={{ width: height * 0.1 }}
           >
             {'>'}
           </div>
@@ -159,7 +159,7 @@ function RowsWrapper(props: Sizes) {
   const { width, height } = props;
   return (
     <div className={styles.rowsWrapper} style={{ width, height }}>
-      <RowWrapper width={width} height={height / 3} count={5} title="Shop" />
+      <RowWrapper width={width} height={height / 3} count={6} title="Shop" />
       <RowWrapper width={width} height={height / 3} count={1} title="Perms" />
       <RowWrapper width={width} height={height / 3} count={10} title="Hand" />
     </div>
