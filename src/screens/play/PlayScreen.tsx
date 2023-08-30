@@ -15,7 +15,7 @@ import {
   getAdaptiveBorderRadius,
 } from '@/components/hoc/sizing';
 
-const ASPECT_RATIO = 4 / 7;
+const ASPECT_RATIO = 6 / 11;
 const CARD_BORDER_WIDTH = 2;
 
 function TextInBox(props: {
