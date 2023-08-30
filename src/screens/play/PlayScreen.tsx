@@ -15,6 +15,7 @@ import {
   getAdaptiveBorderRadius,
 } from '@/components/hoc/sizing';
 
+// For reference - 5/7 is playing card, 4/7 is tarot, 1/2 is domino. 6/11 is best for tall cards, i like 2/3 for fat cards since we dont have art.
 const ASPECT_RATIO = 6 / 11;
 const CARD_BORDER_WIDTH = 2;
 
@@ -108,12 +109,21 @@ function Row(props: Sizes & { count?: number; title?: string }) {
   const { width, height, count = 5, title = 'Shop' } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   // -4px on height to account for border. also make sure to hide horiz scrollbar
+
+  const shouldShowScrollers = count > 5;
+
   return (
     <div className={styles.row} style={{ borderRadius, width, height }}>
-      <TextInBox className={styles.rowFloatingTitle} fontSize={height * 0.075}>
+      <TextInBox
+        className={styles.rowFloatingTitle}
+        fontSize={height * 0.075}
+        style={{ top: height * -0.05, left: width * 0.1 }}
+      >
         {title}
       </TextInBox>
-      {count > 5 ? <div className={styles.rowLeftScroller}>{'<'}</div> : null}
+      {shouldShowScrollers && (
+        <div className={styles.rowLeftScroller}>{'<'}</div>
+      )}
       <div
         className={styles.rowContents}
         style={{ width: width - 4, height: height - 4 }}
