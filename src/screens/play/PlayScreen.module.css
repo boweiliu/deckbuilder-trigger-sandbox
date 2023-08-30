@@ -140,6 +140,7 @@
   /* width: 0px;
      * background-color: transparent;
      * height: 0px; */
+  /* Make this scrollbar visible to debug; its hidden not here but in react code that abuses y overflow clipping */
   background-color: pink;
 }
 
