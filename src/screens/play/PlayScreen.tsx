@@ -113,7 +113,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
   const shouldShowScrollers = count > 5;
 
   return (
-    <div className={styles.row} style={{ borderRadius, width, height }}>
+    <div className={styles.rowArea} style={{ width, height }}>
       <TextInBox
         className={styles.rowFloatingTitle}
         fontSize={height * 0.075}
@@ -121,18 +121,32 @@ function Row(props: Sizes & { count?: number; title?: string }) {
       >
         {title}
       </TextInBox>
-      {shouldShowScrollers && (
-        <div className={styles.rowLeftScroller}>{'<'}</div>
-      )}
-      <div
-        className={styles.rowContents}
-        style={{ width: width - 4, height: height - 4 }}
-      >
-        {new Array(count).fill(0).map((_, idx) => (
-          <SmallCard key={idx} width={width} height={height - 4} />
-        ))}
+      <div className={styles.row} style={{ borderRadius }}>
+        {shouldShowScrollers && (
+          <div
+            className={styles.rowLeftScroller}
+            style={{ width: width * 0.03 }}
+          >
+            {'<'}
+          </div>
+        )}
+        <div
+          className={styles.rowContents}
+          style={{ width: width - 4, height: height - 4 }}
+        >
+          {new Array(count).fill(0).map((_, idx) => (
+            <SmallCard key={idx} width={width} height={height - 4} />
+          ))}
+        </div>
+        {shouldShowScrollers && (
+          <div
+            className={styles.rowRightScroller}
+            style={{ width: width * 0.03 }}
+          >
+            {'>'}
+          </div>
+        )}
       </div>
-      {count > 5 ? <div className={styles.rowRightScroller}>{'>'}</div> : null}
     </div>
   );
 }
