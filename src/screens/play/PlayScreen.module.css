@@ -115,8 +115,8 @@
   left: 0;
   flex: 1 1 100%;
   display: flex;
-  overflow-x: scroll;
-  overflow-y: clip;
+  overflow-x: auto;
+  overflow-y: scroll;
   scrollbar-width: none;
   scrollbar-color: transparent transparent;
   -ms-overflow-style: none;

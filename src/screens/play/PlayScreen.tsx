@@ -139,6 +139,7 @@ function Row(
           </div>
         )}
         <div
+          // onScroll={( it ) => window.alert(it)}
           className={styles.rowContents}
           style={{
             height:
@@ -146,6 +147,15 @@ function Row(
               2 /* intentionally overflow the y way too far, it's fine because the containing div has overflow y clip, and this helps to hide the scrollbar */,
           }}
         >
+          <div
+            style={{
+              width: 10,
+              height: 10,
+              backgroundColor: 'pink',
+              position: 'relative',
+              top: (height - 4) * 3,
+            }}
+          />
           {new Array(count).fill(0).map((_, idx) => (
             <SmallCard key={idx} width={width} height={height - 4} />
           ))}
