@@ -151,6 +151,7 @@ function Row(
             style={{
               width: 10,
               height: 10,
+              flex: '0 0 auto',
               backgroundColor: 'pink',
               position: 'relative',
               top: (height - 4) * 3,
