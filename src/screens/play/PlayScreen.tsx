@@ -138,7 +138,14 @@ function Row(
             {'<'}
           </div>
         )}
-        <div className={styles.rowContents} style={{ height: height - 4 }}>
+        <div
+          className={styles.rowContents}
+          style={{
+            height:
+              (height - 4) *
+              2 /* intentionally overflow the y way too far, it's fine because the containing div has overflow y clip, and this helps to hide the scrollbar */,
+          }}
+        >
           {new Array(count).fill(0).map((_, idx) => (
             <SmallCard key={idx} width={width} height={height - 4} />
           ))}
