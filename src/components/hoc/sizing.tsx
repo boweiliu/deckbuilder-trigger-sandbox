@@ -191,6 +191,7 @@ export const withAutoWidthSized3 = <T extends Sizes & { aspectRatio?: number }>(
   };
 };
 
+// Renders the right component, then uses its rendered sizes to allocate remaining space to the left component
 export const withFlexLeftSized: (args: {
   paddingBetween: number;
 }) => HOC2Sized = (args) => {

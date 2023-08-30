@@ -162,7 +162,46 @@ function RowsWrapper(props: Sizes) {
     <div className={styles.rowsWrapper} style={{ width, height }}>
       <RowWrapper width={width} height={height / 3} count={6} title="Shop" />
       <RowWrapper width={width} height={height / 3} count={1} title="Perms" />
-      <RowWrapper width={width} height={height / 3} count={10} title="Hand" />
+      <RowAndPile width={width} height={height} />
+    </div>
+  );
+}
+
+const PileWrapper = unSizer(
+  withPaddingSized(({ width, height }) => height * 0.04)(defaultSizer(Pile))
+);
+
+function Pile(props: Sizes) {
+  const { width, height } = props;
+  const borderRadius = getAdaptiveBorderRadius({
+    width: width * Infinity,
+    height,
+  });
+  return (
+    <div className={styles.pileArea} style={{ width, height }}>
+      <TextInBox
+        className={styles.pileFloatingTitle}
+        fontSize={height * 0.12}
+        style={{ top: height * -0.05, left: width * 0.5 }}
+      >
+        Pile
+      </TextInBox>
+      <div className={styles.pile} style={{ borderRadius }} />
+    </div>
+  );
+}
+
+function RowAndPile(props: Sizes) {
+  const { width, height } = props;
+  return (
+    <div style={{ display: 'flex' }}>
+      <RowWrapper
+        width={width - 250}
+        height={height / 3}
+        count={10}
+        title="Hand"
+      />
+      <PileWrapper width={250} height={height / 3} />
     </div>
   );
 }
