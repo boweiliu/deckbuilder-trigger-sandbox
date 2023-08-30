@@ -192,22 +192,27 @@ function Pile(props: Sizes) {
       >
         Pile
       </TextInBox>
-      <div className={styles.pile} style={{ borderRadius }} />
+      <div className={styles.pile} style={{ borderRadius }}>
+        <SmallCard width={width} height={height - 4} />
+      </div>
     </div>
   );
 }
 
 function RowAndPile(props: Sizes) {
   const { width, height } = props;
+
+  const pileWidth = (height / 3) * ASPECT_RATIO * 1.2;
+
   return (
     <div style={{ display: 'flex' }}>
       <RowWrapper
-        width={width - 250}
+        width={width - pileWidth}
         height={height / 3}
         count={10}
         title="Hand"
       />
-      <PileWrapper width={250} height={height / 3} />
+      <PileWrapper width={pileWidth} height={height / 3} />
     </div>
   );
 }
