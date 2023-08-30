@@ -124,20 +124,14 @@
 }
 
 .rowContents::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
   margin-left: auto;
   margin-right: auto;
 }
 .rowContents::-webkit-scrollbar-track {
-  background-color: transparent;
-  height: 0px;
-  width: 0px;
+  background-color: white;
 }
 .rowContents::-webkit-scrollbar-thumb {
-  background-color: transparent;
-  height: 0px;
-  width: 0px;
+  background-color: pink;
 }
 
 .rowFloatingTitle {
