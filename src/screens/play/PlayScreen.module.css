@@ -124,13 +124,22 @@
 }
 
 .rowContents::-webkit-scrollbar {
+  /* width: 0px;
+     * background-color: transparent;
+     * height: 0px; */
   margin-left: auto;
   margin-right: auto;
 }
 .rowContents::-webkit-scrollbar-track {
+  /* width: 0px;
+     * background-color: transparent;
+     * height: 0px; */
   background-color: white;
 }
 .rowContents::-webkit-scrollbar-thumb {
+  /* width: 0px;
+     * background-color: transparent;
+     * height: 0px; */
   background-color: pink;
 }
 
