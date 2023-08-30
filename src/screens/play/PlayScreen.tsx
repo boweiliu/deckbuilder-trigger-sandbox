@@ -106,8 +106,10 @@ const SmallCard = unSizer(
   )
 );
 
-function Row(props: Sizes & { count?: number; title?: string }) {
-  const { width, height, count = 5, title = 'Shop' } = props;
+function Row(
+  props: Sizes & { count?: number; title?: string; originalWidth?: number }
+) {
+  const { width, height, count = 5, title = 'Shop', originalWidth } = props;
   const borderRadius = getAdaptiveBorderRadius({ width, height });
   // -4px on height to account for border. also make sure to hide horiz scrollbar
 
@@ -119,7 +121,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
       <TextInBox
         className={styles.rowFloatingTitle}
         fontSize={height * 0.12}
-        style={{ top: height * -0.05, left: width * 0.1 }}
+        style={{ top: height * -0.05, left: (originalWidth ?? width) * 0.1 }}
       >
         {title}
       </TextInBox>
@@ -208,6 +210,7 @@ function RowAndPile(props: Sizes) {
     <div style={{ display: 'flex' }}>
       <RowWrapper
         width={width - pileWidth}
+        originalWidth={width}
         height={height / 3}
         count={10}
         title="Hand"
