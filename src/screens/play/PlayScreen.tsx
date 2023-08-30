@@ -112,6 +112,7 @@ function Row(props: Sizes & { count?: number; title?: string }) {
   // -4px on height to account for border. also make sure to hide horiz scrollbar
 
   const shouldShowScrollers = count > 5;
+  const innerBorderRadius = borderRadius - 2; // subtract off the border width
 
   return (
     <div className={styles.rowArea} style={{ width, height }}>
@@ -126,7 +127,11 @@ function Row(props: Sizes & { count?: number; title?: string }) {
         {shouldShowScrollers && (
           <div
             className={styles.rowLeftScroller}
-            style={{ width: height * 0.28, fontSize: height * 0.15 }}
+            style={{
+              width: height * 0.28,
+              fontSize: height * 0.15,
+              borderRadius: `${innerBorderRadius}px 0px 0px ${innerBorderRadius}px`,
+            }}
           >
             {'<'}
           </div>
@@ -142,7 +147,11 @@ function Row(props: Sizes & { count?: number; title?: string }) {
         {shouldShowScrollers && (
           <div
             className={styles.rowRightScroller}
-            style={{ width: height * 0.28, fontSize: height * 0.15 }}
+            style={{
+              width: height * 0.28,
+              fontSize: height * 0.15,
+              borderRadius: `0px ${innerBorderRadius}px ${innerBorderRadius}px 0px`,
+            }}
           >
             {'>'}
           </div>
