@@ -120,6 +120,7 @@
   scrollbar-width: none;
   scrollbar-color: transparent transparent;
   -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .rowContents::-webkit-scrollbar {
