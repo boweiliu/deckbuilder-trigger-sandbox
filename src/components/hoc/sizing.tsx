@@ -20,6 +20,11 @@ export function getAdaptiveBorderRadius(props: Sizes): number {
   return shorter * 0.08;
 }
 
+export function getBorderRadiusFromHeight(props: Sizes): number {
+  const { height } = props;
+  return height * 0.08;
+}
+
 export const withBorderSized: (
   width: CallbackOrValue<number>,
   opts: { style?: CSSProperties; className?: string; isRounded?: boolean }
@@ -36,14 +41,14 @@ export const withBorderSized: (
         width: availableWidth - 2 * borderWidth,
       };
       const childBorderRadius = opts.isRounded
-        ? getAdaptiveBorderRadius(childAvailableSizes)
+        ? getBorderRadiusFromHeight(childAvailableSizes)
         : 0;
       const borderRadius = opts.isRounded ? childBorderRadius + borderWidth : 0;
-      // const borderRadius = opts.isRounded ? getAdaptiveBorderRadius(props) : 0;
+      // const borderRadius = opts.isRounded ? getBorderRadiusFromHeight(props) : 0;
 
       // invoke child
       const [childRenderedSizes, children] = SizedChildComponent({
-        borderRadius: childBorderRadius + borderWidth * 0.0, // increase child radius by a little so it doesn't interact with the parent even after pixel rounding
+        borderRadius: childBorderRadius + borderWidth * 0.1, // increase child radius by a little so it doesn't interact with the parent even after pixel rounding
         ...props,
         ...childAvailableSizes,
       });

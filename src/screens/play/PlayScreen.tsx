@@ -12,8 +12,9 @@ import {
   defaultSizer,
   unSizer,
   withFlexLeftSized,
-  getAdaptiveBorderRadius,
+  getBorderRadiusFromHeight,
 } from '@/components/hoc/sizing';
+import { CardsRowContents } from '@/screens/play/CardsRowContents';
 
 // For reference - 5/7 is playing card, 4/7 is tarot, 1/2 is domino. 6/11 is best for tall cards, i like 2/3 for fat cards since we dont have art.
 const ASPECT_RATIO = 6 / 11;
@@ -70,7 +71,6 @@ function SmallCardCenterButton(props: Sizes & { text?: string }) {
 function MySmallCard(props: Sizes & { borderRadius?: number }) {
   const { width, height, borderRadius } = props;
   const [selected, setSelected] = useState(Boolean(Math.random() < 0.1));
-  // const borderRadius = getAdaptiveBorderRadius({ width, height });
   return (
     <div
       className={classnames(
@@ -97,7 +97,7 @@ function MySmallCard(props: Sizes & { borderRadius?: number }) {
   );
 }
 
-const SmallCard = unSizer(
+export const SmallCard = unSizer(
   withPaddingSized(({ width, height }) => height * 0.04)(
     withBorderSized(CARD_BORDER_WIDTH, {
       className: styles.smallCardBorder,
@@ -109,15 +109,27 @@ const SmallCard = unSizer(
 function Row(
   props: Sizes & { count?: number; title?: string; originalWidth?: number }
 ) {
-  const { width, height, count = 5, title = 'Shop', originalWidth } = props;
-  const borderRadius = getAdaptiveBorderRadius({ width, height });
-  // -4px on height to account for border. also make sure to hide horiz scrollbar
-
-  const shouldShowScrollers = count > 5;
+  const {
+    width,
+    height: heightWithBorder,
+    count = 5,
+    title = 'Shop',
+    originalWidth,
+  } = props;
+  const borderRadius = getBorderRadiusFromHeight({
+    width,
+    height: heightWithBorder,
+  });
+  // -4px on height to account for border.
+  const height = heightWithBorder - 4;
+  // -2px on border radius for same reason.
   const innerBorderRadius = borderRadius - 2; // subtract off the border width
 
+  // TODO: detect the dimensions and display these accordingly
+  const shouldShowScrollers = count > 5;
+
   return (
-    <div className={styles.rowArea} style={{ width, height }}>
+    <div className={styles.rowArea} style={{ width, height: heightWithBorder }}>
       <TextInBox
         className={styles.rowFloatingTitle}
         fontSize={height * 0.12}
@@ -138,18 +150,7 @@ function Row(
             {'<'}
           </div>
         )}
-        <div
-          className={styles.rowContents}
-          style={{
-            height:
-              (height - 4) *
-              2 /* intentionally overflow the y way too far, it's fine because the containing div has overflow y clip, and this helps to hide the scrollbar */,
-          }}
-        >
-          {new Array(count).fill(0).map((_, idx) => (
-            <SmallCard key={idx} width={width} height={height - 4} />
-          ))}
-        </div>
+        <CardsRowContents width={width} height={height} count={count} />
         {shouldShowScrollers && (
           <div
             className={styles.rowRightScroller}
@@ -188,7 +189,7 @@ const PileWrapper = unSizer(
 
 function Pile(props: Sizes) {
   const { width, height } = props;
-  const borderRadius = getAdaptiveBorderRadius({
+  const borderRadius = getBorderRadiusFromHeight({
     width: width * Infinity,
     height,
   });

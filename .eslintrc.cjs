@@ -29,6 +29,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-expressions': 'warn',
     '@typescript-eslint/no-use-before-define': ["error", { 'functions' : false , 'classes': false }],
     'import/prefer-default-export': 'off',
   },
