@@ -16,8 +16,9 @@ export function CardsRowContents(props: Sizes & { count: number }) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const onWheelScroll = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
-    ref.current?.scrollTop;
-    e.deltaX;
+    if (ref.current) {
+      ref.current.scrollLeft += e.deltaY;
+    }
   }, []);
 
   return (
