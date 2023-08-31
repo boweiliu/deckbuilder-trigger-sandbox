@@ -187,8 +187,8 @@
   text-align: center;
   display: flex;
   justify-content: center;
-  border: solid 2px #ddd;
-  box-shadow: 0px 0px 12px 0px #99999988;
+  border: solid 2px #bbb;
+  /* box-shadow: 0px 0px 12px 0px #99999988; */
 }
 
 .smallCardButtonText {
