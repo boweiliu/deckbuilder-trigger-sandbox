@@ -14,7 +14,10 @@ import {
   withFlexLeftSized,
   getBorderRadiusFromHeight,
 } from '@/components/hoc/sizing';
-import { CardsRowContents } from '@/screens/play/CardsRowContents';
+import {
+  CardsRowContents,
+  CardsRowScrollable,
+} from '@/screens/play/CardsRowContents';
 
 // For reference - 5/7 is playing card, 4/7 is tarot, 1/2 is domino. 6/11 is best for tall cards, i like 2/3 for fat cards since we dont have art.
 const ASPECT_RATIO = 6 / 11;
@@ -138,31 +141,12 @@ function Row(
         {title}
       </TextInBox>
       <div className={styles.row} style={{ borderRadius }}>
-        {shouldShowScrollers && (
-          <div
-            className={styles.rowLeftScroller}
-            style={{
-              width: height * 0.22,
-              fontSize: height * 0.15,
-              borderRadius: `${innerBorderRadius}px 0px 0px ${innerBorderRadius}px`,
-            }}
-          >
-            {'<'}
-          </div>
-        )}
-        <CardsRowContents width={width} height={height} count={count} />
-        {shouldShowScrollers && (
-          <div
-            className={styles.rowRightScroller}
-            style={{
-              width: height * 0.22,
-              fontSize: height * 0.15,
-              borderRadius: `0px ${innerBorderRadius}px ${innerBorderRadius}px 0px`,
-            }}
-          >
-            {'>'}
-          </div>
-        )}
+        <CardsRowScrollable
+          width={width}
+          height={height}
+          count={count}
+          borderRadius={innerBorderRadius}
+        />
       </div>
     </div>
   );
