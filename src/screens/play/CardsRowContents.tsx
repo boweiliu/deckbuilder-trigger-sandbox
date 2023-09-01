@@ -27,9 +27,9 @@ export function CardsRowContents(
   const afterScroll = useCallback(() => {
     if (ref.current) {
       const el = ref.current;
-      setIsScrolledToLeft?.(el.scrollLeft === 0);
+      setIsScrolledToLeft?.(el.scrollLeft <= 0);
       setIsScrolledToRight?.(
-        Math.ceil(el.scrollWidth - el.scrollLeft) === el.clientWidth
+        Math.ceil(el.scrollWidth - el.scrollLeft) <= el.clientWidth
       );
     }
   }, [setIsScrolledToLeft, setIsScrolledToRight]);
