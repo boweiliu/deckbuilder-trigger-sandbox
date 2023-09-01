@@ -2,10 +2,12 @@ import {
   FC,
   useState,
   useRef,
+  useEffect,
   useCallback,
   ReactNode,
   CSSProperties,
 } from 'react';
+import classnames from 'classnames';
 import styles from './PlayScreen.module.css';
 import { Sizes } from '@/components/hoc/sizing';
 
@@ -36,11 +38,14 @@ export function CardsRowContents(
     (e: React.WheelEvent<HTMLDivElement>) => {
       if (ref.current) {
         ref.current.scrollLeft += e.deltaY;
+        e.preventDefault();
         afterScroll();
       }
     },
     [afterScroll]
   );
+
+  useEffect(() => afterScroll(), [afterScroll]);
 
   return (
     <div
@@ -67,12 +72,22 @@ export function CardsRowScrollable(
   const { width, height, borderRadius: innerBorderRadius, count } = props;
 
   const shouldShowScrollers = true;
+  const [showLeft, setShowLeft] = useState(true);
+  const [showRight, setShowRight] = useState(true);
 
+  const setIsScrolledToLeft = useCallback((b: boolean) => setShowLeft(!b), []);
+  const setIsScrolledToRight = useCallback(
+    (b: boolean) => setShowRight(!b),
+    []
+  );
   return (
     <>
       {shouldShowScrollers && (
         <div
-          className={styles.rowLeftScroller}
+          className={classnames(
+            styles.rowLeftScroller,
+            showLeft ? null : styles.disabledScroller
+          )}
           style={{
             width: height * 0.22,
             fontSize: height * 0.15,
@@ -82,10 +97,19 @@ export function CardsRowScrollable(
           {'<'}
         </div>
       )}
-      <CardsRowContents width={width} height={height} count={count} />
+      <CardsRowContents
+        width={width}
+        height={height}
+        count={count}
+        setIsScrolledToLeft={setIsScrolledToLeft}
+        setIsScrolledToRight={setIsScrolledToRight}
+      />
       {shouldShowScrollers && (
         <div
-          className={styles.rowRightScroller}
+          className={classnames(
+            styles.rowRightScroller,
+            showRight ? null : styles.disabledScroller
+          )}
           style={{
             width: height * 0.22,
             fontSize: height * 0.15,

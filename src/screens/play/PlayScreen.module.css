@@ -110,6 +110,10 @@
   border-left: solid 2px #999999;
 }
 
+.disabledScroller {
+  opacity: 0.2;
+}
+
 .rowContents {
   top: 0;
   left: 0;
