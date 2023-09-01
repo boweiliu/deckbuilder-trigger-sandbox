@@ -27,6 +27,8 @@ export function CardsRowContents(
   const afterScroll = useCallback(() => {
     if (ref.current) {
       const el = ref.current;
+        // https://stackoverflow.com/questions/876115/how-can-i-determine-if-a-div-is-scrolled-to-the-bottom
+        // edited to handle ios overscroll as well
       setIsScrolledToLeft?.(el.scrollLeft <= 0);
       setIsScrolledToRight?.(
         Math.ceil(el.scrollWidth - el.scrollLeft) <= el.clientWidth
